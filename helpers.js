@@ -1,3 +1,5 @@
+import { SLOT_VALUES } from "./SLOT_VALUES.js";
+
 const tasks = [
   "Base Telegram: Подписаться",
   "Base Instagram: Подписаться",
@@ -6,6 +8,18 @@ const tasks = [
   "Scroll Instagram: Подписаться",
   "Scroll X: Подписаться",
 ];
+
+export const getSlotSymbols = (value) => {
+  // Найдем объект, у которого value совпадает с выпавшим числом
+  const result = SLOT_VALUES.find((slot) => slot.value === value);
+
+  // Если найдено, возвращаем символы, иначе возвращаем сообщение об ошибке
+  if (result) {
+    return `Результат: ${result.first}, ${result.second}, ${result.third}`;
+  } else {
+    return "Неизвестное значение слота!";
+  }
+};
 
 export const generateTaskButtons = (page = 0) => {
   const tasksPerPage = 5;

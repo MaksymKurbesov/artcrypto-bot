@@ -3,6 +3,7 @@ import {
   animateMessage,
   generatePage,
   generateTaskButtons,
+  getSlotSymbols,
   updatePage,
 } from "./helpers.js";
 import {
@@ -35,6 +36,27 @@ bot.action(/page_(\d+)/, (ctx) => {
   const page = parseInt(ctx.match[1], 10);
   ctx.answerCbQuery();
   ctx.editMessageReplyMarkup(generateTaskButtons(page).reply_markup);
+});
+
+bot.command("spin", async (ctx) => {
+  // Отправляем "слот-машину" пользователю
+  const diceMessage = await ctx.sendDice({ emoji: "🎰" });
+
+  // Результат "слота" (значение от 1 до 64)
+  const diceValue = diceMessage.dice.value;
+
+  console.log(diceMessage, "diceMessage");
+
+  // Отправляем пользователю сообщение с результатом
+  ctx.reply(`🎰 Результат слота: ${diceValue} ${getSlotSymbols(diceValue)}`);
+
+  // Можно добавить логику для победителя, например:
+  // Проверим, если выпал максимальный результат (например, 64 - джекпот)
+  if (diceValue === 64) {
+    ctx.reply("🎉 Поздравляю! Ты сорвал джекпот!");
+  } else {
+    ctx.reply("😔 Попробуй еще раз!");
+  }
 });
 
 bot.on("callback_query", async (ctx) => {

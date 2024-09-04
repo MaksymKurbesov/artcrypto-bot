@@ -3,7 +3,7 @@ export const startInlineKeyboard = [
   [{ text: "₿ Получить BTC ", callback_data: "get_bitcoin" }],
   [
     { text: "💳 Мои кошельки", callback_data: "user_wallets" },
-    { text: "💸 Выводы", callback_data: "3" },
+    { text: "💸 Выводы", callback_data: "test" },
   ],
   [
     { text: "📝 Задачи", callback_data: "tasks_page" },
