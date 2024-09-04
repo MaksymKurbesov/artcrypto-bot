@@ -33,7 +33,16 @@ export const generateTaskButtons = (page = 0) => {
 
   return {
     reply_markup: {
-      inline_keyboard: [...taskButtons, navigationButtons],
+      inline_keyboard: [
+        ...taskButtons,
+        navigationButtons,
+        [
+          {
+            text: "Главное меню 🏠",
+            callback_data: "main_page",
+          },
+        ],
+      ],
     },
   };
 };
@@ -58,4 +67,18 @@ export const updatePage = (ctx, caption, inline_keyboard) => {
     },
     parse_mode: "HTML",
   });
+};
+
+export const animateMessage = async (ctx, messageId, baseMessage) => {
+  const dots = [".", "..", "..."];
+  for (let i = 0; i < 3; i++) {
+    const messageWithDots = baseMessage + dots[i];
+    await ctx.telegram.editMessageText(
+      ctx.chat.id,
+      messageId,
+      null,
+      messageWithDots,
+    );
+    await new Promise((resolve) => setTimeout(resolve, 300)); // Задержка 500 мс
+  }
 };
