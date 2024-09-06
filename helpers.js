@@ -96,3 +96,13 @@ export const animateMessage = async (ctx, messageId, baseMessage) => {
     await new Promise((resolve) => setTimeout(resolve, 300)); // Задержка 500 мс
   }
 };
+
+export const isUserInChat = async (ctx, channelId, userId) => {
+  const chatMember = await ctx.telegram.getChatMember(channelId, userId);
+
+  return (
+    chatMember.status === "member" ||
+    chatMember.status === "administrator" ||
+    chatMember.status === "creator"
+  );
+};
