@@ -16,13 +16,23 @@ export async function addUser(username) {
   }
 }
 
+export async function updateGameStatus(game, status, username) {
+  try {
+    await updateDoc(doc(db, "users", username), {
+      [`games.${game}`]: false,
+    });
+  } catch (e) {
+    console.error("Ошибка при изменение статуса игры: ", e);
+  }
+}
+
 export async function changeUserWallet(wallet, walletNumber, username) {
   try {
     await updateDoc(doc(db, "users", username), {
       [`${wallet}_wallet`]: walletNumber,
     });
   } catch (e) {
-    console.error("Ошибка при добавлении документа: ", e);
+    console.error("Ошибка при изменение кошелька: ", e);
   }
 }
 
@@ -32,6 +42,6 @@ export async function addMoneyToUser(amount, username) {
       balance: increment(amount),
     });
   } catch (e) {
-    console.error("Ошибка при добавлении документа: ", e);
+    console.error("Ошибка при добавлении денег пользователю: ", e);
   }
 }

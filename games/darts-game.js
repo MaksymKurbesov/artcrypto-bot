@@ -8,13 +8,9 @@ export const startDartsGame = async (ctx) => {
   setTimeout(() => {
     if (diceValue === 6) {
       addMoneyToUser(0.5, username);
-      ctx.reply(
-        `🎉 Поздравляем! Ты метко попал в цель и заработал 0.0001 BTC! Отличная работа! `,
-      );
+      ctx.reply(ctx.t("darts_win"));
     } else {
-      ctx.reply(
-        `😕 Увы, сегодня промах. Но не сдавайся, попробуй снова завтра!`,
-      );
+      ctx.reply(ctx.t("darts_lose"));
     }
   }, 4000);
 };

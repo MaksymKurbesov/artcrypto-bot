@@ -4,7 +4,7 @@ import { addMoneyToUser } from "../FirestoreApi.js";
 
 export const startMiningGame = async (ctx) => {
   ctx.session.isMining = true;
-  const sentMessage = await ctx.reply("Процесс майнинга запущен...");
+  const sentMessage = await ctx.reply(`${ctx.t("start_mining")}...`);
 
   const username = ctx.update.callback_query.from.username;
 
@@ -22,7 +22,7 @@ export const startMiningGame = async (ctx) => {
     ctx.chat.id,
     messageId,
     null,
-    "🎉 Блок найден! Вы заработали 0.0001 BTC.",
+    ctx.t("mining_success_end"),
     { parse_mode: "HTML" },
   );
 

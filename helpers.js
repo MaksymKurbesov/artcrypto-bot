@@ -1,13 +1,33 @@
 import { SLOT_VALUES } from "./SLOT_VALUES.js";
 
-const tasks = [
-  "Base Telegram: Подписаться",
-  "Base Instagram: Подписаться",
-  "Base X: Подписаться",
-  "Scroll Telegram: Подписаться",
-  "Scroll Instagram: Подписаться",
-  "Scroll X: Подписаться",
-];
+const getTasks = (ctx) => {
+  return [
+    {
+      text: `Base Telegram: ${ctx.t("subscribe")}`,
+      link: `https://google.com`,
+    },
+    {
+      text: `Base Instagram: ${ctx.t("subscribe")}`,
+      link: `https://google.com`,
+    },
+    {
+      text: `Base X: ${ctx.t("subscribe")}`,
+      link: `https://google.com`,
+    },
+    {
+      text: `Scroll Telegram: ${ctx.t("subscribe")}`,
+      link: `https://google.com`,
+    },
+    {
+      text: `Scroll Instagram: ${ctx.t("subscribe")}`,
+      link: `https://google.com`,
+    },
+    {
+      text: `Scroll X: ${ctx.t("subscribe")}`,
+      link: `https://google.com`,
+    },
+  ];
+};
 
 export const getSlotSymbols = (value) => {
   // Найдем объект, у которого value совпадает с выпавшим числом
@@ -21,26 +41,26 @@ export const getSlotSymbols = (value) => {
   }
 };
 
-export const generateTaskButtons = (page = 0) => {
+export const generateTaskButtons = (ctx, page = 0) => {
   const tasksPerPage = 5;
   const start = page * tasksPerPage;
   const end = start + tasksPerPage;
+  const tasks = getTasks(ctx);
+
   const taskButtons = tasks
     .slice(start, end)
-    .map((task, index) => [
-      { text: task, callback_data: `task_${start + index}` },
-    ]);
+    .map((task) => [{ text: task.text, callback_data: `send_task` }]);
 
   const navigationButtons = [];
   if (page > 0) {
     navigationButtons.push({
-      text: "⬅️ Назад",
+      text: `⬅️ ${ctx.t("back")}`,
       callback_data: `page_${page - 1}`,
     });
   }
   if (end < tasks.length) {
     navigationButtons.push({
-      text: "Вперёд ➡️",
+      text: `${ctx.t("next")} ➡️`,
       callback_data: `page_${page + 1}`,
     });
   }
@@ -52,7 +72,7 @@ export const generateTaskButtons = (page = 0) => {
         navigationButtons,
         [
           {
-            text: "Главное меню 🏠",
+            text: `${ctx.t("main_menu")} 🏠`,
             callback_data: "main_page",
           },
         ],
@@ -83,7 +103,7 @@ export const updatePage = (ctx, caption, inline_keyboard) => {
   });
 };
 
-export const animateMessage = async (ctx, messageId, baseMessage) => {
+export const animateMessage = async (ctx, messageId, baseMessage, keyboard) => {
   const dots = [".", "..", "..."];
   for (let i = 0; i < 3; i++) {
     const messageWithDots = baseMessage + dots[i];
@@ -92,6 +112,12 @@ export const animateMessage = async (ctx, messageId, baseMessage) => {
       messageId,
       null,
       messageWithDots,
+      {
+        parse_mode: "HTML",
+        reply_markup: {
+          inline_keyboard: keyboard,
+        },
+      },
     );
     await new Promise((resolve) => setTimeout(resolve, 300)); // Задержка 500 мс
   }

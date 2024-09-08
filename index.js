@@ -1,6 +1,7 @@
 import { Telegraf, session } from "telegraf";
 import { message } from "telegraf/filters";
 import {
+  animateMessage,
   generatePage,
   generateTaskButtons,
   getSlotSymbols,
@@ -8,20 +9,15 @@ import {
   updatePage,
 } from "./helpers.js";
 import {
-  dartsGameCaption,
-  gameZoneCaption,
-  languageCaption,
+  gameZoneKeyboard,
   languageKeyboard,
-  miningGameCaption,
-  startCaption,
   startInlineKeyboard,
   walletsInlineKeyboard,
-  withdrawCaption,
   withdrawKeyboard,
 } from "./consts.js";
 import { initializeApp } from "firebase/app";
 import { doc, getFirestore, getDoc } from "firebase/firestore";
-import { addUser, changeUserWallet } from "./FirestoreApi.js";
+import { addUser, changeUserWallet, updateGameStatus } from "./FirestoreApi.js";
 import { startMiningGame } from "./games/mining-game.js";
 import { startDartsGame } from "./games/darts-game.js";
 import { firebaseConfig } from "./firebase.config.js";
@@ -50,17 +46,18 @@ bot.start(async (ctx) => {
   const userRef = await doc(db, "users", username);
   const userDoc = await getDoc(userRef);
   const userData = userDoc.data();
-  const formattedCaption = ctx
-    .t("main_menu_caption", { balance: "0" })
-    .replace(/\\n/g, "\n");
 
   if (!userDoc.exists) {
     await addUser(username);
   }
 
-  generatePage(ctx, formattedCaption, startInlineKeyboard(userData.id, ctx));
+  generatePage(
+    ctx,
+    ctx.t("main_menu_caption", { balance: userData.balance }),
+    startInlineKeyboard(userData.id, ctx),
+  );
 
-  const payload = ctx.payload.split("=")[1];
+  const payload = ctx.payload;
 
   console.log(payload, "payload");
 });
@@ -68,7 +65,7 @@ bot.start(async (ctx) => {
 bot.action(/page_(\d+)/, (ctx) => {
   const page = parseInt(ctx.match[1], 10);
   ctx.answerCbQuery();
-  ctx.editMessageReplyMarkup(generateTaskButtons(page).reply_markup);
+  ctx.editMessageReplyMarkup(generateTaskButtons(ctx, page).reply_markup);
 });
 
 bot.on(message("text"), async (ctx) => {
@@ -78,13 +75,13 @@ bot.on(message("text"), async (ctx) => {
 
   if (ctx.session.isUserChangeWallet) {
     await changeUserWallet(wallet, text, username);
-    ctx.reply("🟢 Кошелёк успешно изменён!");
+    ctx.reply(`🟢 ${ctx.t("wallet_changed")}`);
     console.log(ctx.session.changingWallet, "ctx.session.changingWallet");
     ctx.session.isUserChangeWallet = false;
   }
 
   if (ctx.session.isWithdraw) {
-    ctx.reply("🟢 Заявка на вывод успешно отправлена!");
+    ctx.reply(`🟢 ${ctx.t("withdraw_request_sent")}`);
     ctx.session.isWithdraw = false;
   }
 
@@ -126,6 +123,8 @@ bot.on(message("text"), async (ctx) => {
 
 bot.on("callback_query", async (ctx) => {
   const callbackData = ctx.callbackQuery.data;
+  const username = ctx.update.callback_query.from.username;
+  const userRef = doc(db, "users", username);
 
   await ctx.answerCbQuery();
 
@@ -135,71 +134,125 @@ bot.on("callback_query", async (ctx) => {
 
   if (callbackData === "main_page") {
     ctx.session.isMining = false;
-    const username = ctx.update.callback_query.from.username;
-    const userRef = doc(db, "users", username);
     const userDoc = await getDoc(userRef);
     const userData = userDoc.data();
-    const formattedCaption = ctx
-      .t("main_menu_caption", { balance: "0" })
-      .replace(/\\n/g, "\n");
 
     await updatePage(
       ctx,
-      formattedCaption,
+      ctx.t("main_menu_caption", { balance: userData.balance }),
       startInlineKeyboard(userData.id, ctx),
     );
   }
 
   if (callbackData === "gamezone") {
-    await updatePage(ctx, gameZoneCaption, [
-      [
-        { text: "Майнинг ⛏️", callback_data: "mining_game" },
-        { text: "Дартс 🎯", callback_data: "darts_game" },
-        { text: "Баскетбол 🏀", callback_data: "basketball_game" },
-      ],
-      [{ text: "Главное меню 🏠", callback_data: "main_page" }],
-    ]);
+    await updatePage(ctx, ctx.t("gamezone_caption"), gameZoneKeyboard(ctx));
   }
 
   if (callbackData === "tasks_page") {
     await updatePage(
       ctx,
-      `<b>CRYPTO APATE BOT -> Задачи</b>`,
-      generateTaskButtons().reply_markup.inline_keyboard,
+      `<b>CRYPTO APATE BOT -> ${ctx.t("tasks")}</b>`,
+      generateTaskButtons(ctx).reply_markup.inline_keyboard,
     );
   }
 
+  if (callbackData === "send_task") {
+    const baseMessage = `<b>CRYPTO APATE BOT -> Task</b>\n\nBase Telegram: Subscribe\n<b>0.000532BTC</b>\n🔗 <a href="google.com">Link</a>\n\nWaiting...`;
+    const keyboard = [
+      [{ text: "✅ Подписался", callback_data: "subscribed" }],
+      [{ text: "🚫 Отмена", callback_data: "cancel_subscribe" }],
+    ];
+
+    const sentMessage = await ctx.reply(baseMessage, {
+      reply_markup: {
+        inline_keyboard: keyboard,
+      },
+      parse_mode: "HTML",
+    });
+
+    // ctx.session.isUserSubscribed = false;
+
+    // for (let i = 0; i < 3; i++) {
+    //   await animateMessage(ctx, sentMessage.message_id, baseMessage, keyboard);
+    // }
+  }
+
+  if (callbackData === "subscribed") {
+    const updatedMessage = `<b>CRYPTO APATE BOT -> Task</b>\n\n<b>🟢 Спасибо за подписку!</b>\nПолучите <b>0.000532BTC</b>`;
+    const message = ctx.update.callback_query.message;
+
+    await ctx.telegram.editMessageText(
+      message.chat.id,
+      message.message_id,
+      null,
+      updatedMessage,
+      { parse_mode: "HTML" },
+    );
+
+    ctx.session.isUserSubscribed = true;
+  }
+
   if (callbackData === "mining_game") {
-    await updatePage(ctx, miningGameCaption, [
-      [{ text: "Начать поиск блока ✅", callback_data: "start_mining_game" }],
-      [{ text: "Назад ⬅️", callback_data: "gamezone" }],
+    await updatePage(ctx, ctx.t("mining_game_caption"), [
+      [
+        {
+          text: `${ctx.t("search_for_block")} ✅`,
+          callback_data: "start_mining_game",
+        },
+      ],
+      [{ text: `${ctx.t("back")} ⬅️`, callback_data: "gamezone" }],
     ]);
   }
 
   if (callbackData === "darts_game") {
-    await updatePage(ctx, dartsGameCaption, [
-      [{ text: "Метнуть дротик 🎯", callback_data: "start_darts_game" }],
-      [{ text: "Назад ⬅️", callback_data: "gamezone" }],
+    await updatePage(ctx, ctx.t("darts_game_caption"), [
+      [
+        {
+          text: `${ctx.t("throw_dart")} 🎯`,
+          callback_data: "start_darts_game",
+        },
+      ],
+      [{ text: `${ctx.t("back")} ⬅️`, callback_data: "gamezone" }],
     ]);
   }
 
   if (callbackData === "start_mining_game") {
+    const userDoc = await getDoc(userRef);
+    const userData = userDoc.data();
+
+    if (!userData.games.mining) {
+      await ctx.reply(`🔴 ${ctx.t("game_cooldown")}`);
+      return;
+    }
+
+    await updateGameStatus("mining", false, userData.username);
     await startMiningGame(ctx);
   }
 
   if (callbackData === "start_darts_game") {
+    const userDoc = await getDoc(userRef);
+    const userData = userDoc.data();
+
+    if (!userData.games.darts) {
+      await ctx.reply(`🔴 ${ctx.t("game_cooldown")}`);
+      return;
+    }
+
+    await updateGameStatus("darts", false, userData.username);
     await startDartsGame(ctx);
   }
 
   if (callbackData === "user_wallets") {
-    const username = ctx.update.callback_query.from.username;
-    const userRef = doc(db, "users", username);
     const userDoc = await getDoc(userRef);
     const userData = userDoc.data();
 
     await updatePage(
       ctx,
-      `<b>CRYPTO APATE BOT -> Кошельки</b>\n\nУкажите номер кошелька для вывода средств. Пожалуйста, проверьте корректность данных, чтобы избежать ошибок при переводе.\n\n<b>BITCOIN:</b> ${userData.bitcoin_wallet}\n<b>TON:</b> ${userData.ton_wallet}\n<b>TRC20:</b> ${userData.trc20_wallet}`,
+      ctx.t("user_wallets_caption", {
+        bitcoin_wallet: userData.bitcoin_wallet,
+        ton_wallet: userData.ton_wallet,
+        trc20_wallet: userData.trc20_wallet,
+      }),
       walletsInlineKeyboard(ctx),
     );
   }
@@ -207,23 +260,28 @@ bot.on("callback_query", async (ctx) => {
   if (callbackData.startsWith("start_change_wallet")) {
     const wallet = callbackData.split("_")[3];
 
-    await ctx.reply("🟡 Укажите ваш новый номер кошелька");
+    await ctx.reply(`🟡 ${ctx.t("enter_new_wallet")}`);
     ctx.session.isUserChangeWallet = true;
     ctx.session.changingWallet = wallet;
   }
 
   if (callbackData === "withdraw") {
-    await updatePage(ctx, withdrawCaption, withdrawKeyboard(ctx));
+    await updatePage(ctx, ctx.t("withdraw_caption"), withdrawKeyboard(ctx));
   }
 
   if (callbackData.startsWith("withdraw_")) {
-    const username = ctx.update.callback_query.from.username;
-    const userRef = doc(db, "users", username);
     const userDoc = await getDoc(userRef);
     const userData = userDoc.data();
+
+    if (userData.balance < 50) {
+      return await ctx.reply(ctx.t("insufficient_funds"));
+    }
+
     const wallet = callbackData.split("_")[1];
     await ctx.reply(
-      `🟡 <b>Заявка на вывод успешно создана!</b>\n\nТеперь <b>укажите сумму</b>, которую хотите вывести, и ваша заявка будет полностью оформлена. После этого ваши BTC будут отправлены на указанный кошелек в ближайшее время.\n\nНомер вашего кошелька:\n<code>${userData[`${wallet}_wallet`]}</code>`,
+      ctx.t("withdraw_request_created", {
+        wallet: userData[`${wallet}_wallet`],
+      }),
       {
         parse_mode: "HTML",
       },
@@ -232,13 +290,13 @@ bot.on("callback_query", async (ctx) => {
   }
 
   if (callbackData === "language") {
-    await updatePage(ctx, languageCaption, languageKeyboard(ctx));
+    await updatePage(ctx, ctx.t("language_caption"), languageKeyboard(ctx));
   }
 
   if (callbackData.startsWith("language_")) {
     const language = callbackData.split("_")[1];
     await ctx.i18n.setLocale(language);
-    await ctx.reply("🟢 Язык успешно изменён!");
+    await ctx.reply(`🟢 ${ctx.t("language_changed")}`);
   }
 });
 
