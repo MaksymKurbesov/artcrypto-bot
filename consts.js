@@ -13,16 +13,44 @@ export const languageKeyboard = (ctx) => {
   return [
     [
       {
-        text: "RU 🇷🇺",
-        callback_data: "language_ru",
-      },
-      {
         text: "EN 🇬🇧",
         callback_data: "language_en",
       },
       {
+        text: "ES 🇪🇸",
+        callback_data: "language_es",
+      },
+      {
+        text: "HI 🇮🇳",
+        callback_data: "language_hi",
+      },
+    ],
+    [
+      {
+        text: "AR 🇸🇦",
+        callback_data: "language_ar",
+      },
+      {
+        text: "FR 🇫🇷",
+        callback_data: "language_fr",
+      },
+      {
+        text: "PT 🇵🇹",
+        callback_data: "language_pt",
+      },
+    ],
+    [
+      {
+        text: "RU 🇷🇺",
+        callback_data: "language_ru",
+      },
+      {
         text: "DE 🇩🇪",
         callback_data: "language_de",
+      },
+      {
+        text: "ID 🇮🇩",
+        callback_data: "language_id",
       },
     ],
     [{ text: `${ctx.t("main_menu")} 🏠`, callback_data: "main_page" }],
