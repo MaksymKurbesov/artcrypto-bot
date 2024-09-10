@@ -4,15 +4,15 @@ const getTasks = (ctx) => {
   return [
     {
       text: `Base Telegram: ${ctx.t("subscribe")}`,
-      link: `https://google.com`,
+      link: `https://web.telegram.org/a/`,
     },
     {
       text: `Base Instagram: ${ctx.t("subscribe")}`,
-      link: `https://google.com`,
+      link: `https://instagram.com`,
     },
     {
       text: `Base X: ${ctx.t("subscribe")}`,
-      link: `https://google.com`,
+      link: `https://x.com`,
     },
     {
       text: `Scroll Telegram: ${ctx.t("subscribe")}`,
@@ -49,7 +49,9 @@ export const generateTaskButtons = (ctx, page = 0) => {
 
   const taskButtons = tasks
     .slice(start, end)
-    .map((task) => [{ text: task.text, callback_data: `send_task` }]);
+    .map((task) => [
+      { text: task.text, callback_data: `send_task_${task.text}_${task.link}` },
+    ]);
 
   const navigationButtons = [];
   if (page > 0) {

@@ -1,4 +1,7 @@
+close = Close
+cancel = Cancel
 subscribe = Subscribe
+subscribed = Subscribed
 back = Back
 next = Next
 language = Language
@@ -15,6 +18,7 @@ darts = Darts
 basketball = Basketball
 search_for_block = Search for a block
 throw_dart = Throw the dart
+throw_ball = Throw the ball
 language_changed = The language has been successfully changed!
 enter_new_wallet = Enter your new wallet number
 wallet_changed = Wallet successfully changed!
@@ -24,11 +28,31 @@ darts_lose = 😕 Alas, today is a miss. But don't give up, try again tomorrow!
 start_mining = The mining process is up and running
 mining_success_end = 🎉 The block has been found! You have earned 0.0001 BTC.
 insufficient_funds = 🔴 You have insufficient funds in your account.
+no_subscribe = 🔴 You have not yet subscribed to complete the challenge. Subscribe to get your reward!
+referral_message = 🚀 Do you want to try something really cool? I found a bot where you can earn BTC just by playing mini-games! 🎮 🎯
+
+    Throw darts, mine bitcoins, or shoot baskets — and every time you earn real BTC for it! 💸
+task_message = <b>CRYPTO APATE BOT -> Task</b>
+
+    {$taskDescription}
+
+    <b>{$award}BTC</b>
+
+    🔗 <a href="">Link</a>
+    {$link}
+
+    Waiting...
+thanks_for_subscribe = <b>CRYPTO APATE BOT -> Task</b>
+
+                       🟢 Thanks for subscribing!
+
+                       Get <b>{$award}BTC.</b>
 main_menu_caption = <b>CRYPTO APATE BOT -> Main Menu</b>
 
     You: <b>#SWK58XOH</b>
     Balance: <b>{$balance}BTC</b>
-    Withdrawn: <b>0BTC</b>
+    Withdrawn: <b>{$withdrawn}BTC</b>
+    Referrals: <b>{$referrals}</b>
     Place in the top: <b>None</b>
 
     <a href="https://t.me/+h9EN6YjY--05YjEy">💬 <b>Chat</b></a>
@@ -72,6 +96,18 @@ darts_game_caption = <b>CRYPTO APATE BOT -> Get BTC</b>
     <i>The game is available once a day, so focus and claim your reward!</i>
 
     Ready to throw the dart and win? Try it now!
+
+basketball_game_caption = <b>CRYPTO APATE BOT -> Get BTC</b>
+
+    🏀 Welcome to Basketball!
+
+    Test your shooting skills and earn <b>BTC!</b>
+    Score a basket and receive <b>0.0001BTC</b> for every successful shot.
+
+    <i>The game is available once a day, so aim carefully and claim your reward!</i>
+
+    Ready to make your shot and win? Try it now!
+
 user_wallets_caption = <b>CRYPTO APATE BOT -> Wallets</b>
 
     Please specify the wallet number for withdrawals. Make sure to check the accuracy of the data to avoid any mistakes during the transfer.

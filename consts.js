@@ -68,7 +68,9 @@ export const startInlineKeyboard = (userId, ctx) => {
       { text: `📝 ${ctx.t("tasks")}`, callback_data: "tasks_page" },
       {
         text: `👥 ${ctx.t("invite_friends")}`,
-        url: `https://t.me/share/url?text=🚀%20Хочешь%20попробовать%20что-то%20действительно%20крутое?%20Нашел%20бота,%20где%20можно%20зарабатывать%20BTC,%20просто%20играя%20в%20мини-игры!%20🎮🎯%20Бросай%20дротики,%20копай%20биткоины%20или%20закидывай%20мячи%20в%20корзину%20—%20и%20каждый%20раз%20за%20это%20получаешь%20настоящие%20BTC!%20💸%20&url=https://t.me/cryptoapatebot/?start=${userId}`,
+        url: `https://t.me/share/url?text=${ctx.t("referral_message", { userId: "test" })}&url=https://t.me/cryptoapatebot/?start=${userId}`,
+        // url: ctx.t("referral_message", { userId: "test" }),
+        // url: `https://t.me/share/url?text=test`,
       },
     ],
     [
