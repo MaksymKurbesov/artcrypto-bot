@@ -1,7 +1,6 @@
 import { Telegraf, session } from "telegraf";
 import { message } from "telegraf/filters";
 import {
-  animateMessage,
   generatePage,
   generateTaskButtons,
   getSlotSymbols,
@@ -11,6 +10,7 @@ import {
 import {
   gameZoneKeyboard,
   languageKeyboard,
+  REFERRAL_REWARD,
   startInlineKeyboard,
   walletsInlineKeyboard,
   withdrawKeyboard,
@@ -19,6 +19,7 @@ import { initializeApp } from "firebase/app";
 import { doc, getFirestore, getDoc } from "firebase/firestore";
 import {
   addMoneyToUser,
+  addReferralToUser,
   addUser,
   changeUserWallet,
   updateGameStatus,
@@ -47,38 +48,51 @@ bot.use(
 );
 bot.use(i18n);
 
-bot.start(async (ctx) => {
-  const username = ctx.update.message.from.username;
-  const userRef = await doc(db, "users", username);
-  const userDoc = await getDoc(userRef);
-  const userData = userDoc.data();
-
-  if (!userDoc.exists) {
-    await addUser(username);
-  }
-
-  const userBalance = userData.balance.toFixed(5);
-  const userWithdrawn = userData.withdrawn.toFixed(5);
-
-  generatePage(
-    ctx,
-    ctx.t("main_menu_caption", {
-      balance: userBalance,
-      withdrawn: userWithdrawn,
-      referrals: 0,
-    }),
-    startInlineKeyboard(userData.username, ctx),
-  );
-
-  const payload = ctx.payload;
-
-  console.log(payload, "payload");
-});
-
 bot.action(/page_(\d+)/, (ctx) => {
   const page = parseInt(ctx.match[1], 10);
   ctx.answerCbQuery();
   ctx.editMessageReplyMarkup(generateTaskButtons(ctx, page).reply_markup);
+});
+
+bot.start(async (ctx) => {
+  const username = ctx.update.message.from.username;
+  const userRef = await doc(db, "users", username);
+  const userDoc = await getDoc(userRef);
+
+  let userBalance;
+  let userWithdrawn;
+  let userReferrals;
+
+  if (!userDoc.exists()) {
+    const user = await addUser(username);
+
+    userBalance = user.balance.toFixed(5);
+    userWithdrawn = user.withdrawn.toFixed(5);
+    userReferrals = user.referrals;
+  } else {
+    const userData = userDoc.data();
+    userBalance = userData.balance.toFixed(5);
+    userWithdrawn = userData.withdrawn.toFixed(5);
+    userReferrals = userData.referrals;
+  }
+
+  generatePage(
+    ctx,
+    ctx.t("main_menu_caption", {
+      username: username,
+      balance: userBalance,
+      withdrawn: userWithdrawn,
+      referrals: userReferrals,
+    }),
+    startInlineKeyboard(username, ctx),
+  );
+
+  const referralNickname = ctx.payload;
+
+  if (referralNickname) {
+    await addReferralToUser(referralNickname);
+    await addMoneyToUser(REFERRAL_REWARD, referralNickname);
+  }
 });
 
 bot.on(message("text"), async (ctx) => {
@@ -147,17 +161,21 @@ bot.on("callback_query", async (ctx) => {
 
   if (callbackData === "main_page") {
     ctx.session.isMining = false;
+    ctx.session.isWithdraw = false;
+
     const userDoc = await getDoc(userRef);
     const userData = userDoc.data();
     const userBalance = userData.balance.toFixed(5);
     const userWithdrawn = userData.withdrawn.toFixed(5);
+    const userReferrals = userData.referrals;
 
     await updatePage(
       ctx,
       ctx.t("main_menu_caption", {
+        username: username,
         balance: userBalance,
         withdrawn: userWithdrawn,
-        referrals: 0,
+        referrals: userReferrals,
       }),
       startInlineKeyboard(userData.username, ctx),
     );

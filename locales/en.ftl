@@ -49,7 +49,7 @@ thanks_for_subscribe = <b>CRYPTO APATE BOT -> Task</b>
                        Get <b>{$award}BTC.</b>
 main_menu_caption = <b>CRYPTO APATE BOT -> Main Menu</b>
 
-    You: <b>#SWK58XOH</b>
+    You: <b>{$username}</b>
     Balance: <b>{$balance}BTC</b>
     Withdrawn: <b>{$withdrawn}BTC</b>
     Referrals: <b>{$referrals}</b>
@@ -122,7 +122,7 @@ withdraw_caption = <b>CRYPTO APATE BOT -> Withdrawal</b>
 
     Here you can withdraw your earned BTC to the wallet you specified. Make sure your balance is sufficient for the withdrawal and check the accuracy of the entered data.
 
-    Minimum withdrawal amount: <b>0,000018BTC ($50)</b>.
+    Minimum withdrawal amount: <b>0.000018BTC ($50)</b>.
 
     <i>Withdrawal may take some time depending on network congestion.</i>
 
@@ -142,3 +142,14 @@ withdraw_request_created = 🟡 <b>Withdrawal request successfully created!</b>
     <code>{$wallet}</code>
 
 withdraw_request_sent = Withdrawal request successfully sent!
+
+operation1 = Initialize the mining process
+operation2 = Run the SHA-256 cryptographic algorithm to find a matching hash
+operation3 = Establishing a connection to the distributed network of nodes
+operation4 = Collecting transaction data to form a new block
+operation5 = Checking data integrity and verifying transactions
+operation6 = Optimize computing power to solve the block
+operation7 = Finding the correct nonce to achieve the target hash value
+operation8 = Initializing the mining process
+operation9 = Confirming the found solution and broadcasting it to the network
+operation10 = Include the block in the chain and update data on all nodes
