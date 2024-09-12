@@ -1,30 +1,44 @@
 import { SLOT_VALUES } from "./SLOT_VALUES.js";
+import { CONNECT_REWARD, SUBSCRIBE_REWARD } from "./consts.js";
 
 const getTasks = (ctx) => {
   return [
     {
-      text: `Base Telegram: ${ctx.t("subscribe")}`,
-      link: `https://web.telegram.org/a/`,
-    },
-    {
-      text: `Base Instagram: ${ctx.t("subscribe")}`,
-      link: `https://instagram.com`,
-    },
-    {
-      text: `Base X: ${ctx.t("subscribe")}`,
-      link: `https://x.com`,
+      text: `Scroll Wallet: ${ctx.t("connect")}`,
+      link: `https://dropscroll.io`,
+      price: CONNECT_REWARD,
+      callback_data: `Scroll Wallet: Connect`,
     },
     {
       text: `Scroll Telegram: ${ctx.t("subscribe")}`,
       link: `https://google.com`,
+      price: SUBSCRIBE_REWARD,
+      callback_data: `Scroll Telegram: Subscribe`,
     },
-    {
-      text: `Scroll Instagram: ${ctx.t("subscribe")}`,
-      link: `https://google.com`,
-    },
+
     {
       text: `Scroll X: ${ctx.t("subscribe")}`,
       link: `https://google.com`,
+      price: SUBSCRIBE_REWARD,
+      callback_data: "Scroll X: Subscribe",
+    },
+    {
+      text: `Base Wallet: ${ctx.t("connect")}`,
+      link: `https://dropscroll.io`,
+      price: CONNECT_REWARD,
+      callback_data: "Base Wallet: Connect",
+    },
+    {
+      text: `Base Telegram: ${ctx.t("subscribe")}`,
+      link: `https://web.telegram.org/a/`,
+      price: SUBSCRIBE_REWARD,
+      callback_data: "Base Telegram: Subscribe",
+    },
+    {
+      text: `Base X: ${ctx.t("subscribe")}`,
+      link: `https://x.com`,
+      price: SUBSCRIBE_REWARD,
+      callback_data: "Base X: Subscribe",
     },
   ];
 };
@@ -47,11 +61,14 @@ export const generateTaskButtons = (ctx, page = 0) => {
   const end = start + tasksPerPage;
   const tasks = getTasks(ctx);
 
-  const taskButtons = tasks
-    .slice(start, end)
-    .map((task) => [
-      { text: task.text, callback_data: `send_task_${task.text}_${task.link}` },
-    ]);
+  const taskButtons = tasks.slice(start, end).map((task) => {
+    return [
+      {
+        text: `${task.text} - ${task.price}₿`,
+        callback_data: `send_task_${task.callback_data}_${task.link}`,
+      },
+    ];
+  });
 
   const navigationButtons = [];
   if (page > 0) {

@@ -12,6 +12,7 @@ import {
   languageKeyboard,
   REFERRAL_REWARD,
   startInlineKeyboard,
+  TASK_REWARD_BY_TYPE_MAP,
   walletsInlineKeyboard,
   withdrawKeyboard,
 } from "./consts.js";
@@ -66,13 +67,13 @@ bot.start(async (ctx) => {
   if (!userDoc.exists()) {
     const user = await addUser(username);
 
-    userBalance = user.balance.toFixed(5);
-    userWithdrawn = user.withdrawn.toFixed(5);
+    userBalance = user.balance.toFixed(6);
+    userWithdrawn = user.withdrawn.toFixed(6);
     userReferrals = user.referrals;
   } else {
     const userData = userDoc.data();
-    userBalance = userData.balance.toFixed(5);
-    userWithdrawn = userData.withdrawn.toFixed(5);
+    userBalance = userData.balance.toFixed(6);
+    userWithdrawn = userData.withdrawn.toFixed(6);
     userReferrals = userData.referrals;
   }
 
@@ -153,10 +154,8 @@ bot.on("callback_query", async (ctx) => {
   const username = ctx.update.callback_query.from.username;
   const userRef = doc(db, "users", username);
 
-  await ctx.answerCbQuery();
-
   if (ctx.session.isMining) {
-    return await ctx.answerCbQuery();
+    return;
   }
 
   if (callbackData === "main_page") {
@@ -165,8 +164,8 @@ bot.on("callback_query", async (ctx) => {
 
     const userDoc = await getDoc(userRef);
     const userData = userDoc.data();
-    const userBalance = userData.balance.toFixed(5);
-    const userWithdrawn = userData.withdrawn.toFixed(5);
+    const userBalance = userData.balance.toFixed(6);
+    const userWithdrawn = userData.withdrawn.toFixed(6);
     const userReferrals = userData.referrals;
 
     await updatePage(
@@ -196,16 +195,21 @@ bot.on("callback_query", async (ctx) => {
   if (callbackData.startsWith("send_task")) {
     const taskDescription = callbackData.split("_")[2];
     const taskLink = callbackData.split("_")[3];
+    const taskType = taskDescription.split(":")[1].trim();
+    const reward = TASK_REWARD_BY_TYPE_MAP[taskType].toFixed(6);
+
+    ctx.session.taskReward = reward;
+    ctx.session.isUserSubscribed = false;
 
     const keyboard = [
-      [{ text: `✅ ${ctx.t("subscribed")}`, callback_data: "subscribed" }],
-      [{ text: `🚫 ${ctx.t("cancel")}`, callback_data: "cancel_subscribe" }],
+      [{ text: `✅ ${ctx.t("done")}`, callback_data: "subscribed" }],
+      [{ text: `🚫 ${ctx.t("cancel")}`, callback_data: "delete_message" }],
     ];
 
     await ctx.reply(
       ctx.t("task_message", {
         taskDescription: taskDescription,
-        award: "0.00053",
+        award: reward,
         link: taskLink,
       }),
       {
@@ -218,8 +222,6 @@ bot.on("callback_query", async (ctx) => {
         },
       },
     );
-
-    ctx.session.isUserSubscribed = false;
 
     setTimeout(() => {
       ctx.session.isUserSubscribed = true;
@@ -245,12 +247,12 @@ bot.on("callback_query", async (ctx) => {
     const message = ctx.update.callback_query.message;
     console.log(message, "message");
 
-    await addMoneyToUser(0.000532, message.chat.username);
+    await addMoneyToUser(ctx.session.taskReward, message.chat.username);
     await ctx.telegram.editMessageText(
       message.chat.id,
       message.message_id,
       null,
-      ctx.t("thanks_for_subscribe", { award: "0.00532" }),
+      ctx.t("thanks_for_subscribe", { award: ctx.session.taskReward }),
       {
         reply_markup: {
           inline_keyboard: [
@@ -321,6 +323,7 @@ bot.on("callback_query", async (ctx) => {
 
     await updateGameStatus("mining", false, userData.username);
     await startMiningGame(ctx);
+    ctx.session.isMining = false;
   }
 
   if (callbackData === "start_darts_game") {
@@ -342,7 +345,7 @@ bot.on("callback_query", async (ctx) => {
 
     if (!userData.games.basketball) {
       await ctx.reply(`🔴 ${ctx.t("game_cooldown")}`);
-      return;
+      return ctx.answerCbQuery();
     }
 
     await updateGameStatus("basketball", false, userData.username);
@@ -405,6 +408,36 @@ bot.on("callback_query", async (ctx) => {
     await ctx.i18n.setLocale(language);
     await ctx.reply(`🟢 ${ctx.t("language_changed")}`);
   }
+
+  if (callbackData === "referrals") {
+    await updatePage(
+      ctx,
+      ctx.t("referrals_caption", { reward: REFERRAL_REWARD.toFixed(6) }),
+      [
+        [
+          {
+            text: ctx.t("invite_friends"),
+            url: `https://t.me/share/url?text=${ctx.t("referral_message")}&url=https://t.me/cryptoapatebot/?start=${username}`,
+          },
+        ],
+        [{ text: `${ctx.t("main_menu")} 🏠`, callback_data: "main_page" }],
+      ],
+    );
+  }
+
+  if (callbackData === "daily_reward") {
+    await updatePage(ctx, ctx.t("daily_reward_caption"), [
+      [
+        {
+          text: `${ctx.t("get_daily_reward")} 🎁`,
+          callback_data: "get_daily_reward",
+        },
+      ],
+      [{ text: `${ctx.t("main_menu")} 🏠`, callback_data: "main_page" }],
+    ]);
+  }
+
+  await ctx.answerCbQuery();
 });
 
 // Запуск бота

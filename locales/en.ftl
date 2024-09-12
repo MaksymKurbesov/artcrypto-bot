@@ -1,7 +1,12 @@
+get_daily_reward = Get daily bonus
+gamezone = Gamezone
+daily_reward = Daily bonus
+connect = Connect
 close = Close
 cancel = Cancel
 subscribe = Subscribe
 subscribed = Subscribed
+done = Done
 back = Back
 next = Next
 language = Language
@@ -28,7 +33,7 @@ darts_lose = 😕 Alas, today is a miss. But don't give up, try again tomorrow!
 start_mining = The mining process is up and running
 mining_success_end = 🎉 The block has been found! You have earned 0.0001 BTC.
 insufficient_funds = 🔴 You have insufficient funds in your account.
-no_subscribe = 🔴 You have not yet subscribed to complete the challenge. Subscribe to get your reward!
+no_subscribe = 🔴 You have not yet completed the task. Complete the task to get your reward!
 referral_message = 🚀 Do you want to try something really cool? I found a bot where you can earn BTC just by playing mini-games! 🎮 🎯
 
     Throw darts, mine bitcoins, or shoot baskets — and every time you earn real BTC for it! 💸
@@ -44,9 +49,9 @@ task_message = <b>CRYPTO APATE BOT -> Task</b>
     Waiting...
 thanks_for_subscribe = <b>CRYPTO APATE BOT -> Task</b>
 
-                       🟢 Thanks for subscribing!
+                       🟢 Thank you for completing the task!
 
-                       Get <b>{$award}BTC.</b>
+                       Received <b>{$award}BTC.</b>
 main_menu_caption = <b>CRYPTO APATE BOT -> Main Menu</b>
 
     You: <b>{$username}</b>
@@ -55,7 +60,7 @@ main_menu_caption = <b>CRYPTO APATE BOT -> Main Menu</b>
     Referrals: <b>{$referrals}</b>
     Place in the top: <b>None</b>
 
-    <a href="https://t.me/+h9EN6YjY--05YjEy">💬 <b>Chat</b></a>
+    <a href="google.com">💬 <b>Chat</b></a>
 mining_game_caption = <b>CRYPTO APATE BOT -> Get BTC</b>
 
     <b>Brief description of the mining process:</b>
@@ -122,7 +127,7 @@ withdraw_caption = <b>CRYPTO APATE BOT -> Withdrawal</b>
 
     Here you can withdraw your earned BTC to the wallet you specified. Make sure your balance is sufficient for the withdrawal and check the accuracy of the entered data.
 
-    Minimum withdrawal amount: <b>0.000018BTC ($50)</b>.
+    Minimum withdrawal amount: <b>0.0086BTC (500$)</b>.
 
     <i>Withdrawal may take some time depending on network congestion.</i>
 
@@ -140,6 +145,25 @@ withdraw_request_created = 🟡 <b>Withdrawal request successfully created!</b>
 
     Your wallet number:
     <code>{$wallet}</code>
+
+referrals_caption = <b>CRYPTO APATE BOT -> Referrals</b>
+
+    <b>Invite friends and earn rewards!</b> 👥
+
+    Join our referral program: for each invited user, you will receive a bonus reward. <b>({$reward}BTC)</b>
+
+    Share your unique referral link and increase your chances of earning prizes.
+    The more friends you invite, the more rewards you get!
+
+daily_reward_caption = <b>CRYPTO APATE BOT -> Daily Bonus</b>
+
+    <b>Earn ₿ every day!</b>
+
+    Log into the app daily and receive a Bitcoin bonus!
+
+    Every day you have the chance to get a bonus ranging from <b>$0.1</b> to <b>$1</b> in BTC just for logging into the app.
+
+    Don’t miss a day to take full advantage of the daily bonus!
 
 withdraw_request_sent = Withdrawal request successfully sent!
 

@@ -28,6 +28,4 @@ export const startMiningGame = async (ctx) => {
   );
 
   await addMoneyToUser(0.0001, username);
-
-  ctx.session.isMining = false;
 };

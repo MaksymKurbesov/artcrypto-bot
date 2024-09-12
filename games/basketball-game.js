@@ -6,7 +6,7 @@ export const startBasketballGame = async (ctx) => {
   const diceValue = diceMessage.dice.value;
 
   setTimeout(() => {
-    if (diceValue === 5) {
+    if (diceValue === 5 || diceValue === 4) {
       addMoneyToUser(0.5, username);
       ctx.reply(ctx.t("darts_win"));
     } else {
