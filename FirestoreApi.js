@@ -4,18 +4,19 @@ import { db } from "./index.js";
 export async function addUser(username) {
   try {
     const userData = {
-      username,
       balance: 0,
-      withdrawn: 0,
       bitcoin_wallet: "",
-      ton_wallet: "",
-      trc20_wallet: "",
+      dailyReward: true,
       games: {
         basketball: true,
         darts: true,
         mining: true,
       },
       referrals: 0,
+      ton_wallet: "",
+      trc20_wallet: "",
+      username,
+      withdrawn: 0,
     };
 
     await setDoc(doc(db, "users", username), userData);
