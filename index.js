@@ -153,305 +153,309 @@ bot.on(message("text"), async (ctx) => {
 // });
 
 bot.on("callback_query", async (ctx) => {
-  const callbackData = ctx.callbackQuery.data;
-  const username = ctx.update.callback_query.from.username;
-  const userRef = doc(db, "users", username);
+  try {
+    const callbackData = ctx.callbackQuery.data;
+    const username = ctx.update.callback_query.from.username;
+    const userRef = doc(db, "users", username);
 
-  if (ctx.session.isMining) {
-    return;
-  }
+    if (ctx.session.isMining) {
+      return;
+    }
 
-  if (callbackData === "main_page") {
-    ctx.session.isMining = false;
-    ctx.session.isWithdraw = false;
+    if (callbackData === "main_page") {
+      ctx.session.isMining = false;
+      ctx.session.isWithdraw = false;
 
-    const userDoc = await getDoc(userRef);
-    const userData = userDoc.data();
-    const userBalance = userData.balance.toFixed(6);
-    const userWithdrawn = userData.withdrawn.toFixed(6);
-    const userReferrals = userData.referrals;
+      const userDoc = await getDoc(userRef);
+      const userData = userDoc.data();
+      const userBalance = userData.balance.toFixed(6);
+      const userWithdrawn = userData.withdrawn.toFixed(6);
+      const userReferrals = userData.referrals;
 
-    await updatePage(
-      ctx,
-      ctx.t("main_menu_caption", {
-        username: username,
-        balance: userBalance,
-        withdrawn: userWithdrawn,
-        referrals: userReferrals,
-      }),
-      startInlineKeyboard(userData.username, ctx),
-    );
-  }
+      await updatePage(
+        ctx,
+        ctx.t("main_menu_caption", {
+          username: username,
+          balance: userBalance,
+          withdrawn: userWithdrawn,
+          referrals: userReferrals,
+        }),
+        startInlineKeyboard(userData.username, ctx),
+      );
+    }
 
-  if (callbackData === "gamezone") {
-    await updatePage(ctx, ctx.t("gamezone_caption"), gameZoneKeyboard(ctx));
-  }
+    if (callbackData === "gamezone") {
+      await updatePage(ctx, ctx.t("gamezone_caption"), gameZoneKeyboard(ctx));
+    }
 
-  if (callbackData === "tasks_page") {
-    await updatePage(
-      ctx,
-      `<b>CRYPTO QUEST -> ${ctx.t("tasks")}</b>`,
-      generateTaskButtons(ctx).reply_markup.inline_keyboard,
-    );
-  }
+    if (callbackData === "tasks_page") {
+      await updatePage(
+        ctx,
+        `<b>CRYPTO QUEST -> ${ctx.t("tasks")}</b>`,
+        generateTaskButtons(ctx).reply_markup.inline_keyboard,
+      );
+    }
 
-  if (callbackData.startsWith("send_task")) {
-    const taskDescription = callbackData.split("_")[2];
-    const taskLink = callbackData.split("_")[3];
-    const taskType = taskDescription.split(":")[1].trim();
-    const reward = TASK_REWARD_BY_TYPE_MAP[taskType].toFixed(6);
+    if (callbackData.startsWith("send_task")) {
+      const taskDescription = callbackData.split("_")[2];
+      const taskLink = callbackData.split("_")[3];
+      const taskType = taskDescription.split(":")[1].trim();
+      const reward = TASK_REWARD_BY_TYPE_MAP[taskType].toFixed(6);
 
-    ctx.session.taskReward = reward;
-    ctx.session.isUserSubscribed = false;
+      ctx.session.taskReward = reward;
+      ctx.session.isUserSubscribed = false;
 
-    const keyboard = [
-      [{ text: `✅ ${ctx.t("done")}`, callback_data: "subscribed" }],
-      [{ text: `🚫 ${ctx.t("cancel")}`, callback_data: "delete_message" }],
-    ];
+      const keyboard = [
+        [{ text: `✅ ${ctx.t("done")}`, callback_data: "subscribed" }],
+        [{ text: `🚫 ${ctx.t("cancel")}`, callback_data: "delete_message" }],
+      ];
 
-    await ctx.reply(
-      ctx.t("task_message", {
-        taskDescription: taskDescription,
-        award: reward,
-        link: taskLink,
-      }),
-      {
-        reply_markup: {
-          inline_keyboard: keyboard,
+      await ctx.reply(
+        ctx.t("task_message", {
+          taskDescription: taskDescription,
+          award: reward,
+          link: taskLink,
+        }),
+        {
+          reply_markup: {
+            inline_keyboard: keyboard,
+          },
+          parse_mode: "HTML",
+          link_preview_options: {
+            is_disabled: true,
+          },
         },
-        parse_mode: "HTML",
-        link_preview_options: {
-          is_disabled: true,
-        },
-      },
-    );
+      );
 
-    setTimeout(() => {
+      setTimeout(() => {
+        ctx.session.isUserSubscribed = true;
+      }, 2500);
+    }
+
+    if (callbackData === "subscribed") {
+      if (!ctx.session.isUserSubscribed) {
+        await ctx.reply(ctx.t("no_subscribe"), {
+          reply_markup: {
+            inline_keyboard: [[getCloseButton(ctx)]],
+          },
+        });
+        return ctx.answerCbQuery();
+      }
+
+      const message = ctx.update.callback_query.message;
+      console.log(message, "message");
+
+      await addMoneyToUser(ctx.session.taskReward, message.chat.username);
+      await ctx.telegram.editMessageText(
+        message.chat.id,
+        message.message_id,
+        null,
+        ctx.t("thanks_for_subscribe", { award: ctx.session.taskReward }),
+        {
+          reply_markup: {
+            inline_keyboard: [[getCloseButton(ctx)]],
+          },
+          parse_mode: "HTML",
+        },
+      );
+
       ctx.session.isUserSubscribed = true;
-    }, 2500);
-  }
-
-  if (callbackData === "subscribed") {
-    if (!ctx.session.isUserSubscribed) {
-      await ctx.reply(ctx.t("no_subscribe"), {
-        reply_markup: {
-          inline_keyboard: [[getCloseButton(ctx)]],
-        },
-      });
-      return ctx.answerCbQuery();
     }
 
-    const message = ctx.update.callback_query.message;
-    console.log(message, "message");
-
-    await addMoneyToUser(ctx.session.taskReward, message.chat.username);
-    await ctx.telegram.editMessageText(
-      message.chat.id,
-      message.message_id,
-      null,
-      ctx.t("thanks_for_subscribe", { award: ctx.session.taskReward }),
-      {
-        reply_markup: {
-          inline_keyboard: [[getCloseButton(ctx)]],
-        },
-        parse_mode: "HTML",
-      },
-    );
-
-    ctx.session.isUserSubscribed = true;
-  }
-
-  if (callbackData === "delete_message") {
-    const message = ctx.update.callback_query.message;
-    await ctx.deleteMessage(message.message_id);
-  }
-
-  if (callbackData === "mining_game") {
-    await updatePage(ctx, ctx.t("mining_game_caption"), [
-      [
-        {
-          text: `${ctx.t("search_for_block")} ✅`,
-          callback_data: "start_mining_game",
-        },
-      ],
-      [{ text: `${ctx.t("back")} ⬅️`, callback_data: "gamezone" }],
-    ]);
-  }
-
-  if (callbackData === "darts_game") {
-    await updatePage(ctx, ctx.t("darts_game_caption"), [
-      [
-        {
-          text: `${ctx.t("throw_dart")} 🎯`,
-          callback_data: "start_darts_game",
-        },
-      ],
-      [{ text: `${ctx.t("back")} ⬅️`, callback_data: "gamezone" }],
-    ]);
-  }
-
-  if (callbackData === "basketball_game") {
-    await updatePage(ctx, ctx.t("basketball_game_caption"), [
-      [
-        {
-          text: `${ctx.t("throw_ball")} 🏀`,
-          callback_data: "start_basketball_game",
-        },
-      ],
-      [{ text: `${ctx.t("back")} ⬅️`, callback_data: "gamezone" }],
-    ]);
-  }
-
-  if (callbackData === "start_mining_game") {
-    const userDoc = await getDoc(userRef);
-    const userData = userDoc.data();
-
-    if (!userData.games.mining) {
-      await ctx.reply(`🔴 ${ctx.t("game_cooldown")}`);
-      return;
+    if (callbackData === "delete_message") {
+      const message = ctx.update.callback_query.message;
+      await ctx.deleteMessage(message.message_id);
     }
 
-    await updateGameStatus("mining", false, userData.username);
-    await startMiningGame(ctx);
-    ctx.session.isMining = false;
-  }
-
-  if (callbackData === "start_darts_game") {
-    const userDoc = await getDoc(userRef);
-    const userData = userDoc.data();
-
-    if (!userData.games.darts) {
-      await ctx.reply(`🔴 ${ctx.t("game_cooldown")}`);
-      return;
-    }
-
-    await updateGameStatus("darts", false, userData.username);
-    await startDartsGame(ctx);
-  }
-
-  if (callbackData === "start_basketball_game") {
-    const userDoc = await getDoc(userRef);
-    const userData = userDoc.data();
-
-    if (!userData.games.basketball) {
-      await ctx.reply(`🔴 ${ctx.t("game_cooldown")}`);
-      return ctx.answerCbQuery();
-    }
-
-    await updateGameStatus("basketball", false, userData.username);
-    await startBasketballGame(ctx);
-  }
-
-  if (callbackData === "user_wallets") {
-    const userDoc = await getDoc(userRef);
-    const userData = userDoc.data();
-
-    await updatePage(
-      ctx,
-      ctx.t("user_wallets_caption", {
-        bitcoin_wallet: userData.bitcoin_wallet,
-        ton_wallet: userData.ton_wallet,
-        trc20_wallet: userData.trc20_wallet,
-      }),
-      walletsInlineKeyboard(ctx),
-    );
-  }
-
-  if (callbackData.startsWith("start_change_wallet")) {
-    const wallet = callbackData.split("_")[3];
-
-    await ctx.reply(`🟡 ${ctx.t("enter_new_wallet")}`);
-    ctx.session.isUserChangeWallet = true;
-    ctx.session.changingWallet = wallet;
-  }
-
-  if (callbackData === "withdraw") {
-    await updatePage(ctx, ctx.t("withdraw_caption"), withdrawKeyboard(ctx));
-  }
-
-  if (callbackData.startsWith("withdraw_")) {
-    const userDoc = await getDoc(userRef);
-    const userData = userDoc.data();
-
-    if (userData.balance < 50) {
-      return await ctx.reply(ctx.t("insufficient_funds"));
-    }
-
-    const wallet = callbackData.split("_")[1];
-    await ctx.reply(
-      ctx.t("withdraw_request_created", {
-        wallet: userData[`${wallet}_wallet`],
-      }),
-      {
-        parse_mode: "HTML",
-      },
-    );
-    ctx.session.isWithdraw = true;
-  }
-
-  if (callbackData === "language") {
-    await updatePage(ctx, ctx.t("language_caption"), languageKeyboard(ctx));
-  }
-
-  if (callbackData.startsWith("language_")) {
-    const language = callbackData.split("_")[1];
-    await ctx.i18n.setLocale(language);
-    await ctx.reply(`🟢 ${ctx.t("language_changed")}`);
-  }
-
-  if (callbackData === "referrals") {
-    await updatePage(
-      ctx,
-      ctx.t("referrals_caption", { reward: REFERRAL_REWARD.toFixed(6) }),
-      [
+    if (callbackData === "mining_game") {
+      await updatePage(ctx, ctx.t("mining_game_caption"), [
         [
           {
-            text: ctx.t("invite_friends"),
-            url: `https://t.me/share/url?text=${ctx.t("referral_message")}&url=https://t.me/cryptoapatebot/?start=${username}`,
+            text: `${ctx.t("search_for_block")} ✅`,
+            callback_data: "start_mining_game",
+          },
+        ],
+        [{ text: `${ctx.t("back")} ⬅️`, callback_data: "gamezone" }],
+      ]);
+    }
+
+    if (callbackData === "darts_game") {
+      await updatePage(ctx, ctx.t("darts_game_caption"), [
+        [
+          {
+            text: `${ctx.t("throw_dart")} 🎯`,
+            callback_data: "start_darts_game",
+          },
+        ],
+        [{ text: `${ctx.t("back")} ⬅️`, callback_data: "gamezone" }],
+      ]);
+    }
+
+    if (callbackData === "basketball_game") {
+      await updatePage(ctx, ctx.t("basketball_game_caption"), [
+        [
+          {
+            text: `${ctx.t("throw_ball")} 🏀`,
+            callback_data: "start_basketball_game",
+          },
+        ],
+        [{ text: `${ctx.t("back")} ⬅️`, callback_data: "gamezone" }],
+      ]);
+    }
+
+    if (callbackData === "start_mining_game") {
+      const userDoc = await getDoc(userRef);
+      const userData = userDoc.data();
+
+      if (!userData.games.mining) {
+        await ctx.reply(`🔴 ${ctx.t("game_cooldown")}`);
+        return;
+      }
+
+      await updateGameStatus("mining", false, userData.username);
+      await startMiningGame(ctx);
+      ctx.session.isMining = false;
+    }
+
+    if (callbackData === "start_darts_game") {
+      const userDoc = await getDoc(userRef);
+      const userData = userDoc.data();
+
+      if (!userData.games.darts) {
+        await ctx.reply(`🔴 ${ctx.t("game_cooldown")}`);
+        return;
+      }
+
+      await updateGameStatus("darts", false, userData.username);
+      await startDartsGame(ctx);
+    }
+
+    if (callbackData === "start_basketball_game") {
+      const userDoc = await getDoc(userRef);
+      const userData = userDoc.data();
+
+      if (!userData.games.basketball) {
+        await ctx.reply(`🔴 ${ctx.t("game_cooldown")}`);
+        return ctx.answerCbQuery();
+      }
+
+      await updateGameStatus("basketball", false, userData.username);
+      await startBasketballGame(ctx);
+    }
+
+    if (callbackData === "user_wallets") {
+      const userDoc = await getDoc(userRef);
+      const userData = userDoc.data();
+
+      await updatePage(
+        ctx,
+        ctx.t("user_wallets_caption", {
+          bitcoin_wallet: userData.bitcoin_wallet,
+          ton_wallet: userData.ton_wallet,
+          trc20_wallet: userData.trc20_wallet,
+        }),
+        walletsInlineKeyboard(ctx),
+      );
+    }
+
+    if (callbackData.startsWith("start_change_wallet")) {
+      const wallet = callbackData.split("_")[3];
+
+      await ctx.reply(`🟡 ${ctx.t("enter_new_wallet")}`);
+      ctx.session.isUserChangeWallet = true;
+      ctx.session.changingWallet = wallet;
+    }
+
+    if (callbackData === "withdraw") {
+      await updatePage(ctx, ctx.t("withdraw_caption"), withdrawKeyboard(ctx));
+    }
+
+    if (callbackData.startsWith("withdraw_")) {
+      const userDoc = await getDoc(userRef);
+      const userData = userDoc.data();
+
+      if (userData.balance < 50) {
+        return await ctx.reply(ctx.t("insufficient_funds"));
+      }
+
+      const wallet = callbackData.split("_")[1];
+      await ctx.reply(
+        ctx.t("withdraw_request_created", {
+          wallet: userData[`${wallet}_wallet`],
+        }),
+        {
+          parse_mode: "HTML",
+        },
+      );
+      ctx.session.isWithdraw = true;
+    }
+
+    if (callbackData === "language") {
+      await updatePage(ctx, ctx.t("language_caption"), languageKeyboard(ctx));
+    }
+
+    if (callbackData.startsWith("language_")) {
+      const language = callbackData.split("_")[1];
+      await ctx.i18n.setLocale(language);
+      await ctx.reply(`🟢 ${ctx.t("language_changed")}`);
+    }
+
+    if (callbackData === "referrals") {
+      await updatePage(
+        ctx,
+        ctx.t("referrals_caption", { reward: REFERRAL_REWARD.toFixed(6) }),
+        [
+          [
+            {
+              text: ctx.t("invite_friends"),
+              url: `https://t.me/share/url?text=${ctx.t("referral_message")}&url=https://t.me/cryptoapatebot/?start=${username}`,
+            },
+          ],
+          [{ text: `${ctx.t("main_menu")} 🏠`, callback_data: "main_page" }],
+        ],
+      );
+    }
+
+    if (callbackData === "daily_reward") {
+      await updatePage(ctx, ctx.t("daily_reward_caption"), [
+        [
+          {
+            text: `${ctx.t("get_daily_reward")} 🎁`,
+            callback_data: "get_daily_reward",
           },
         ],
         [{ text: `${ctx.t("main_menu")} 🏠`, callback_data: "main_page" }],
-      ],
-    );
-  }
+      ]);
+    }
 
-  if (callbackData === "daily_reward") {
-    await updatePage(ctx, ctx.t("daily_reward_caption"), [
-      [
-        {
-          text: `${ctx.t("get_daily_reward")} 🎁`,
-          callback_data: "get_daily_reward",
-        },
-      ],
-      [{ text: `${ctx.t("main_menu")} 🏠`, callback_data: "main_page" }],
-    ]);
-  }
+    if (callbackData === "get_daily_reward") {
+      const reward = generateReward();
+      const userDoc = await getDoc(userRef);
+      const userData = userDoc.data();
 
-  if (callbackData === "get_daily_reward") {
-    const reward = generateReward();
-    const userDoc = await getDoc(userRef);
-    const userData = userDoc.data();
+      if (!userData.dailyReward) {
+        await ctx.reply(ctx.t("daily_reward_received"), {
+          reply_markup: {
+            inline_keyboard: [[getCloseButton(ctx)]],
+          },
+        });
+        return ctx.answerCbQuery();
+      }
 
-    if (!userData.dailyReward) {
-      await ctx.reply(ctx.t("daily_reward_received"), {
+      await ctx.reply(ctx.t("daily_reward_message", { reward: reward }), {
+        parse_mode: "HTML",
         reply_markup: {
           inline_keyboard: [[getCloseButton(ctx)]],
         },
       });
-      return ctx.answerCbQuery();
+      await addMoneyToUser(reward, username);
+      await updateDailyRewardStatus(false, username);
     }
 
-    await ctx.reply(ctx.t("daily_reward_message", { reward: reward }), {
-      parse_mode: "HTML",
-      reply_markup: {
-        inline_keyboard: [[getCloseButton(ctx)]],
-      },
-    });
-    await addMoneyToUser(reward, username);
-    await updateDailyRewardStatus(false, username);
+    await ctx.answerCbQuery();
+  } catch (e) {
+    console.log(e, "error");
   }
-
-  await ctx.answerCbQuery();
 });
 
 // Запуск бота
