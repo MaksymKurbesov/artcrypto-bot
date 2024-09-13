@@ -142,6 +142,19 @@ export const animateMessage = async (ctx, messageId, baseMessage, keyboard) => {
   }
 };
 
+export const generateReward = () => {
+  const min = 0.000017;
+  const max = 0.0000017;
+  return (Math.random() * (max - min) + min).toFixed(6);
+};
+
+export const getCloseButton = (ctx) => {
+  return {
+    text: `${ctx.t("close")} ❌`,
+    callback_data: "delete_message",
+  };
+};
+
 export const isUserInChat = async (ctx, channelId, userId) => {
   const chatMember = await ctx.telegram.getChatMember(channelId, userId);
 

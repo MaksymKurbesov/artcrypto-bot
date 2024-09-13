@@ -2,7 +2,9 @@ import { Telegraf, session } from "telegraf";
 import { message } from "telegraf/filters";
 import {
   generatePage,
+  generateReward,
   generateTaskButtons,
+  getCloseButton,
   getSlotSymbols,
   isUserInChat,
   updatePage,
@@ -23,6 +25,7 @@ import {
   addReferralToUser,
   addUser,
   changeUserWallet,
+  updateDailyRewardStatus,
   updateGameStatus,
 } from "./FirestoreApi.js";
 import { startMiningGame } from "./games/mining-game.js";
@@ -230,18 +233,12 @@ bot.on("callback_query", async (ctx) => {
 
   if (callbackData === "subscribed") {
     if (!ctx.session.isUserSubscribed) {
-      return await ctx.reply(ctx.t("no_subscribe"), {
+      await ctx.reply(ctx.t("no_subscribe"), {
         reply_markup: {
-          inline_keyboard: [
-            [
-              {
-                text: `${ctx.t("close")} ❌`,
-                callback_data: "delete_message",
-              },
-            ],
-          ],
+          inline_keyboard: [[getCloseButton(ctx)]],
         },
       });
+      return ctx.answerCbQuery();
     }
 
     const message = ctx.update.callback_query.message;
@@ -255,14 +252,7 @@ bot.on("callback_query", async (ctx) => {
       ctx.t("thanks_for_subscribe", { award: ctx.session.taskReward }),
       {
         reply_markup: {
-          inline_keyboard: [
-            [
-              {
-                text: `${ctx.t("close")} ❌`,
-                callback_data: "delete_message",
-              },
-            ],
-          ],
+          inline_keyboard: [[getCloseButton(ctx)]],
         },
         parse_mode: "HTML",
       },
@@ -435,6 +425,30 @@ bot.on("callback_query", async (ctx) => {
       ],
       [{ text: `${ctx.t("main_menu")} 🏠`, callback_data: "main_page" }],
     ]);
+  }
+
+  if (callbackData === "get_daily_reward") {
+    const reward = generateReward();
+    const userDoc = await getDoc(userRef);
+    const userData = userDoc.data();
+
+    if (!userData.dailyReward) {
+      await ctx.reply(ctx.t("daily_reward_received"), {
+        reply_markup: {
+          inline_keyboard: [[getCloseButton(ctx)]],
+        },
+      });
+      return ctx.answerCbQuery();
+    }
+
+    await ctx.reply(ctx.t("daily_reward_message", { reward: reward }), {
+      parse_mode: "HTML",
+      reply_markup: {
+        inline_keyboard: [[getCloseButton(ctx)]],
+      },
+    });
+    await addMoneyToUser(reward, username);
+    await updateDailyRewardStatus(false, username);
   }
 
   await ctx.answerCbQuery();

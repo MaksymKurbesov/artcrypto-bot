@@ -161,9 +161,15 @@ daily_reward_caption = <b>CRYPTO APATE BOT -> Daily Bonus</b>
 
     Log into the app daily and receive a Bitcoin bonus!
 
-    Every day you have the chance to get a bonus ranging from <b>$0.1</b> to <b>$1</b> in BTC just for logging into the app.
+    Every day you have the chance to get a bonus ranging from <b>0.0000017BTC</b> to <b>0.000017BTC</b> in BTC just for logging into the app.
 
     Don’t miss a day to take full advantage of the daily bonus!
+
+daily_reward_message = <b>🎉 Surprise of the day! Fortune has gifted you {$reward}BTC! 💫</b>
+
+    Keep coming back daily for new rewards, and may luck always be with you! 🍀
+
+daily_reward_received = 🔴 Oops! It looks like you've already claimed your bonus for today! Come back tomorrow for a new surprise. Good luck! 🍀
 
 withdraw_request_sent = Withdrawal request successfully sent!
 

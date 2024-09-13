@@ -29,7 +29,7 @@ export async function addUser(username) {
 export async function updateGameStatus(game, status, username) {
   try {
     await updateDoc(doc(db, "users", username), {
-      [`games.${game}`]: false,
+      [`games.${game}`]: status,
     });
   } catch (e) {
     console.error("Ошибка при изменение статуса игры: ", e);
@@ -50,6 +50,16 @@ export async function addMoneyToUser(amount, username) {
   try {
     await updateDoc(doc(db, "users", username), {
       balance: increment(amount),
+    });
+  } catch (e) {
+    console.error("Ошибка при добавлении денег пользователю: ", e);
+  }
+}
+
+export async function updateDailyRewardStatus(status, username) {
+  try {
+    await updateDoc(doc(db, "users", username), {
+      dailyReward: status,
     });
   } catch (e) {
     console.error("Ошибка при добавлении денег пользователю: ", e);
