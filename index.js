@@ -37,7 +37,7 @@ import { startBasketballGame } from "./games/basketball-game.js";
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-const bot = new Telegraf("7427158827:AAHweRtzXbYUW0K_iwFPSNNMXCzMBlxmMiE");
+const bot = new Telegraf("7249494538:AAFTyrQvUKj9yqS7JFFgIWhyHNJ4xwwX-yI");
 
 const i18n = new I18n({
   defaultLocale: "en", // see below for more information
