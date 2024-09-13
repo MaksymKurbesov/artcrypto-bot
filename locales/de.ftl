@@ -24,7 +24,7 @@ darts_lose = 😕 Leider daneben. Versuchen Sie es morgen noch einmal!
 start_mining = Mining-Prozess gestartet
 mining_success_end = 🎉 Block gefunden! Sie haben 0.0001 BTC verdient.
 insufficient_funds = 🔴 Ihr Kontostand ist unzureichend.
-main_menu_caption = <b>CRYPTO APATE BOT -> Hauptmenü</b>
+main_menu_caption = <b>CRYPTO QUEST -> Hauptmenü</b>
 
     Sie: <b>#SWK58XOH</b>
     Kontostand: <b>{$balance}BTC</b>
@@ -32,14 +32,14 @@ main_menu_caption = <b>CRYPTO APATE BOT -> Hauptmenü</b>
     Ranglistenplatz: <b>Kein</b>
 
     <a href="https://t.me/+h9EN6YjY--05YjEy">💬 <b>Chat</b></a>
-mining_game_caption = <b>CRYPTO APATE BOT -> BTC erhalten</b>
+mining_game_caption = <b>CRYPTO QUEST -> BTC erhalten</b>
 
     <b>Kurzbeschreibung des Mining-Prozesses:</b>
     <code>Es handelt sich um den Prozess des Lösens komplexer mathematischer Probleme mithilfe des kryptografischen SHA-256-Algorithmus. Miner verifizieren Transaktionen und erstellen neue Blöcke für die Blockchain, indem sie einen einzigartigen Hash finden.</code>
 
     <b>Warum man dafür Bitcoin bekommt:</b>
     <code>Miner erhalten Bitcoin für das erfolgreiche Hinzufügen von Blöcken zur Blockchain. Dies motiviert die Teilnehmer, das Netzwerk am Laufen zu halten und zu sichern.</code>
-darts_game_caption = <b>CRYPTO APATE BOT -> BTC erhalten</b>
+darts_game_caption = <b>CRYPTO QUEST -> BTC erhalten</b>
 
     <b>🎯 Willkommen bei Darts!</b>
     Testen Sie Ihre Treffsicherheit und verdienen Sie <b>BTC</b>!
@@ -48,7 +48,7 @@ darts_game_caption = <b>CRYPTO APATE BOT -> BTC erhalten</b>
     <i>Das Spiel ist einmal pro Tag verfügbar, also konzentrieren Sie sich und holen Sie sich Ihre Belohnung!</i>
     Bereit, einen Dart zu werfen und zu gewinnen? Versuchen Sie es jetzt!
 
-gamezone_caption = <b>CRYPTO APATE BOT -> BTC erhalten</b>
+gamezone_caption = <b>CRYPTO QUEST -> BTC erhalten</b>
 
     <b>Willkommen in der Spielzone! 🎮</b>
 
@@ -63,7 +63,7 @@ gamezone_caption = <b>CRYPTO APATE BOT -> BTC erhalten</b>
 
     Wählen Sie Ihr Lieblingsspiel und beginnen Sie, <i><b>BTC</b></i> zu verdienen!
 
-user_wallets_caption = <b>CRYPTO APATE BOT -> Wallets</b>
+user_wallets_caption = <b>CRYPTO QUEST -> Wallets</b>
 
     Bitte geben Sie die Nummer Ihrer Wallet für die Auszahlung ein. Überprüfen Sie die Korrektheit der Daten, um Fehler bei der Transaktion zu vermeiden.
 
@@ -71,7 +71,7 @@ user_wallets_caption = <b>CRYPTO APATE BOT -> Wallets</b>
     <b>TON:</b> {$ton_wallet}
     <b>TRC20:</b> {$trc20_wallet}
 
-withdraw_caption = <b>CRYPTO APATE BOT -> Auszahlung</b>
+withdraw_caption = <b>CRYPTO QUEST -> Auszahlung</b>
 
     <b>💼 Auszahlung von Geldern</b>
 
@@ -81,7 +81,7 @@ withdraw_caption = <b>CRYPTO APATE BOT -> Auszahlung</b>
 
     <i>Die Auszahlung kann je nach Netzauslastung einige Zeit in Anspruch nehmen.</i>
 
-language_caption = <b>CRYPTO APATE BOT -> Sprachauswahl</b>
+language_caption = <b>CRYPTO QUEST -> Sprachauswahl</b>
 
     Wählen Sie eine Sprache aus, um den Bot einfacher zu nutzen.
 

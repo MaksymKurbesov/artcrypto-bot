@@ -24,7 +24,7 @@ darts_lose = 😕 Malheureusement, vous avez manqué aujourd'hui. Ne vous décou
 start_mining = Processus de minage lancé
 mining_success_end = 🎉 Bloc trouvé ! Vous avez gagné 0,0001 BTC.
 insufficient_funds = 🔴 Fonds insuffisants sur le compte.
-main_menu_caption = <b>CRYPTO APATE BOT -> Menu principal</b>
+main_menu_caption = <b>CRYPTO QUEST -> Menu principal</b>
 
     Vous : <b>#SWK58XOH</b>
     Solde : <b>{$balance}BTC</b>
@@ -32,14 +32,14 @@ main_menu_caption = <b>CRYPTO APATE BOT -> Menu principal</b>
     Position au classement : <b>Aucune</b>
 
     <a href="https://t.me/+h9EN6YjY--05YjEy">💬 <b>Discussion</b></a>
-mining_game_caption = <b>CRYPTO APATE BOT -> Obtenir BTC</b>
+mining_game_caption = <b>CRYPTO QUEST -> Obtenir BTC</b>
 
     <b>Description rapide du processus de minage :</b>
     <code>C'est le processus de résolution de problèmes mathématiques complexes à l'aide de l'algorithme de cryptographie SHA-256. Les mineurs vérifient les transactions et créent de nouveaux blocs pour la blockchain en trouvant un hash unique.</code>
 
     <b>Pourquoi peut-on gagner des bitcoins pour cela :</b>
     <code>Les mineurs reçoivent des bitcoins pour l'ajout réussi de blocs à la blockchain. Cela incite les participants à maintenir la sécurité et le fonctionnement du réseau.</code>
-darts_game_caption = <b>CRYPTO APATE BOT -> Obtenir BTC</b>
+darts_game_caption = <b>CRYPTO QUEST -> Obtenir BTC</b>
 
     <b>🎯 Bienvenue dans le jeu de fléchettes !</b>
     Testez votre précision et gagnez <b>BTC</b> !
@@ -48,7 +48,7 @@ darts_game_caption = <b>CRYPTO APATE BOT -> Obtenir BTC</b>
     <i>Le jeu est disponible une fois par jour, alors concentrez-vous et prenez votre récompense !</i>
     Prêt à lancer une fléchette et à gagner ? Essayez maintenant !
 
-gamezone_caption = <b>CRYPTO APATE BOT -> Obtenir BTC</b>
+gamezone_caption = <b>CRYPTO QUEST -> Obtenir BTC</b>
 
     <b>Bienvenue dans la zone de jeux ! 🎮</b>
 
@@ -63,7 +63,7 @@ gamezone_caption = <b>CRYPTO APATE BOT -> Obtenir BTC</b>
 
     Choisissez votre jeu préféré et commencez à gagner des <i><b>BTC</b></i> !
 
-user_wallets_caption = <b>CRYPTO APATE BOT -> Portefeuilles</b>
+user_wallets_caption = <b>CRYPTO QUEST -> Portefeuilles</b>
 
     Veuillez entrer le numéro de portefeuille pour retirer vos fonds. Vérifiez l'exactitude des données pour éviter toute erreur de transfert.
 
@@ -71,7 +71,7 @@ user_wallets_caption = <b>CRYPTO APATE BOT -> Portefeuilles</b>
     <b>TON :</b> {$ton_wallet}
     <b>TRC20 :</b> {$trc20_wallet}
 
-withdraw_caption = <b>CRYPTO APATE BOT -> Retrait</b>
+withdraw_caption = <b>CRYPTO QUEST -> Retrait</b>
 
     <b>💼 Retrait de fonds</b>
 
@@ -81,7 +81,7 @@ withdraw_caption = <b>CRYPTO APATE BOT -> Retrait</b>
 
     <i>Le retrait des fonds peut prendre un certain temps en fonction de la charge du réseau.</i>
 
-language_caption = <b>CRYPTO APATE BOT -> Sélection de la langue</b>
+language_caption = <b>CRYPTO QUEST -> Sélection de la langue</b>
 
     Choisissez une langue pour utiliser le bot plus facilement.
 

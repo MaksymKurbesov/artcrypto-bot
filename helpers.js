@@ -11,17 +11,16 @@ const getTasks = (ctx) => {
     },
     {
       text: `Scroll Telegram: ${ctx.t("subscribe")}`,
-      link: `https://google.com`,
+      link: `https://t.me/scroll_zk_io`,
       price: SUBSCRIBE_REWARD,
       callback_data: `Scroll Telegram: Subscribe`,
     },
-
-    {
-      text: `Scroll X: ${ctx.t("subscribe")}`,
-      link: `https://google.com`,
-      price: SUBSCRIBE_REWARD,
-      callback_data: "Scroll X: Subscribe",
-    },
+    // {
+    //   text: `Scroll X: ${ctx.t("subscribe")}`,
+    //   link: `https://google.com`,
+    //   price: SUBSCRIBE_REWARD,
+    //   callback_data: "Scroll X: Subscribe",
+    // },
     {
       text: `Base Wallet: ${ctx.t("connect")}`,
       link: `https://dropscroll.io`,
@@ -30,16 +29,16 @@ const getTasks = (ctx) => {
     },
     {
       text: `Base Telegram: ${ctx.t("subscribe")}`,
-      link: `https://web.telegram.org/a/`,
+      link: `https://t.me/base_air_drop`,
       price: SUBSCRIBE_REWARD,
       callback_data: "Base Telegram: Subscribe",
     },
-    {
-      text: `Base X: ${ctx.t("subscribe")}`,
-      link: `https://x.com`,
-      price: SUBSCRIBE_REWARD,
-      callback_data: "Base X: Subscribe",
-    },
+    // {
+    //   text: `Base X: ${ctx.t("subscribe")}`,
+    //   link: `https://x.com`,
+    //   price: SUBSCRIBE_REWARD,
+    //   callback_data: "Base X: Subscribe",
+    // },
   ];
 };
 

@@ -190,7 +190,7 @@ bot.on("callback_query", async (ctx) => {
   if (callbackData === "tasks_page") {
     await updatePage(
       ctx,
-      `<b>CRYPTO APATE BOT -> ${ctx.t("tasks")}</b>`,
+      `<b>CRYPTO QUEST -> ${ctx.t("tasks")}</b>`,
       generateTaskButtons(ctx).reply_markup.inline_keyboard,
     );
   }

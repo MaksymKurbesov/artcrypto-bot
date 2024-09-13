@@ -37,7 +37,7 @@ no_subscribe = 🔴 You have not yet completed the task. Complete the task to ge
 referral_message = 🚀 Do you want to try something really cool? I found a bot where you can earn BTC just by playing mini-games! 🎮 🎯
 
     Throw darts, mine bitcoins, or shoot baskets — and every time you earn real BTC for it! 💸
-task_message = <b>CRYPTO APATE BOT -> Task</b>
+task_message = <b>CRYPTO QUEST -> Task</b>
 
     {$taskDescription}
 
@@ -47,12 +47,12 @@ task_message = <b>CRYPTO APATE BOT -> Task</b>
     {$link}
 
     Waiting...
-thanks_for_subscribe = <b>CRYPTO APATE BOT -> Task</b>
+thanks_for_subscribe = <b>CRYPTO QUEST -> Task</b>
 
                        🟢 Thank you for completing the task!
 
                        Received <b>{$award}BTC.</b>
-main_menu_caption = <b>CRYPTO APATE BOT -> Main Menu</b>
+main_menu_caption = <b>CRYPTO QUEST -> Main Menu</b>
 
     You: <b>{$username}</b>
     Balance: <b>{$balance}BTC</b>
@@ -61,14 +61,14 @@ main_menu_caption = <b>CRYPTO APATE BOT -> Main Menu</b>
     Place in the top: <b>None</b>
 
     <a href="google.com">💬 <b>Chat</b></a>
-mining_game_caption = <b>CRYPTO APATE BOT -> Get BTC</b>
+mining_game_caption = <b>CRYPTO QUEST -> Get BTC</b>
 
     <b>Brief description of the mining process:</b>
     <code>This is the process of solving complex mathematical problems using the SHA-256 cryptographic algorithm. Miners verify transactions and create new blocks for the blockchain by selecting a unique hash.</code>
 
     <b>Why you can earn Bitcoin for this:</b>
     <code>Miners receive Bitcoin for successfully adding a block to the blockchain. This incentivizes network participants to maintain its operation and security.</code>
-darts_game_caption = <b>CRYPTO APATE BOT -> Get BTC</b>
+darts_game_caption = <b>CRYPTO QUEST -> Get BTC</b>
 
     <b>🎯 Welcome to Darts!</b>
     Test your accuracy and earn <b>BTC!</b>
@@ -76,7 +76,7 @@ darts_game_caption = <b>CRYPTO APATE BOT -> Get BTC</b>
 
     <i>The game is available once a day, so focus and claim your reward!</i>
     Ready to throw the dart and win? Try it now!;
-gamezone_caption = <b>CRYPTO APATE BOT -> Get BTC</b>
+gamezone_caption = <b>CRYPTO QUEST -> Get BTC</b>
 
     <b>Welcome to the game zone! 🎮</b>
 
@@ -91,7 +91,7 @@ gamezone_caption = <b>CRYPTO APATE BOT -> Get BTC</b>
 
     Pick your favorite game and start earning</i><b> BTC</b>!
 
-darts_game_caption = <b>CRYPTO APATE BOT -> Get BTC</b>
+darts_game_caption = <b>CRYPTO QUEST -> Get BTC</b>
 
     <b>🎯 Welcome to Darts!</b>
 
@@ -102,7 +102,7 @@ darts_game_caption = <b>CRYPTO APATE BOT -> Get BTC</b>
 
     Ready to throw the dart and win? Try it now!
 
-basketball_game_caption = <b>CRYPTO APATE BOT -> Get BTC</b>
+basketball_game_caption = <b>CRYPTO QUEST -> Get BTC</b>
 
     🏀 Welcome to Basketball!
 
@@ -113,7 +113,7 @@ basketball_game_caption = <b>CRYPTO APATE BOT -> Get BTC</b>
 
     Ready to make your shot and win? Try it now!
 
-user_wallets_caption = <b>CRYPTO APATE BOT -> Wallets</b>
+user_wallets_caption = <b>CRYPTO QUEST -> Wallets</b>
 
     Please specify the wallet number for withdrawals. Make sure to check the accuracy of the data to avoid any mistakes during the transfer.
 
@@ -121,7 +121,7 @@ user_wallets_caption = <b>CRYPTO APATE BOT -> Wallets</b>
     <b>TON:</b> {$ton_wallet}
     <b>TRC20:</b> {$trc20_wallet}
 
-withdraw_caption = <b>CRYPTO APATE BOT -> Withdrawal</b>
+withdraw_caption = <b>CRYPTO QUEST -> Withdrawal</b>
 
     <b>💼 Withdrawal of Funds</b>
 
@@ -132,7 +132,7 @@ withdraw_caption = <b>CRYPTO APATE BOT -> Withdrawal</b>
     <i>Withdrawal may take some time depending on network congestion.</i>
 
 
-language_caption = <b>CRYPTO APATE BOT -> Language Selection</b>
+language_caption = <b>CRYPTO QUEST -> Language Selection</b>
 
     Please select a language for convenient use of the bot.
 
@@ -146,7 +146,7 @@ withdraw_request_created = 🟡 <b>Withdrawal request successfully created!</b>
     Your wallet number:
     <code>{$wallet}</code>
 
-referrals_caption = <b>CRYPTO APATE BOT -> Referrals</b>
+referrals_caption = <b>CRYPTO QUEST -> Referrals</b>
 
     <b>Invite friends and earn rewards!</b> 👥
 
@@ -155,7 +155,7 @@ referrals_caption = <b>CRYPTO APATE BOT -> Referrals</b>
     Share your unique referral link and increase your chances of earning prizes.
     The more friends you invite, the more rewards you get!
 
-daily_reward_caption = <b>CRYPTO APATE BOT -> Daily Bonus</b>
+daily_reward_caption = <b>CRYPTO QUEST -> Daily Bonus</b>
 
     <b>Earn ₿ every day!</b>
 

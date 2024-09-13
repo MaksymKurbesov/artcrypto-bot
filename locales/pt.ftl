@@ -24,7 +24,7 @@ darts_lose = 😕 Infelizmente, você errou hoje. Mas não desista, tente novame
 start_mining = Processo de mineração iniciado
 mining_success_end = 🎉 Bloco encontrado! Você ganhou 0.0001 BTC.
 insufficient_funds = 🔴 Saldo insuficiente na conta.
-main_menu_caption = <b>CRYPTO APATE BOT -> Menu principal</b>
+main_menu_caption = <b>CRYPTO QUEST -> Menu principal</b>
 
     Você: <b>#SWK58XOH</b>
     Saldo: <b>{$balance}BTC</b>
@@ -32,14 +32,14 @@ main_menu_caption = <b>CRYPTO APATE BOT -> Menu principal</b>
     Posição no ranking: <b>Nenhuma</b>
 
     <a href="https://t.me/+h9EN6YjY--05YjEy">💬 <b>Chat</b></a>
-mining_game_caption = <b>CRYPTO APATE BOT -> Obter BTC</b>
+mining_game_caption = <b>CRYPTO QUEST -> Obter BTC</b>
 
     <b>Descrição rápida do processo de mineração:</b>
     <code>É o processo de resolver problemas matemáticos complexos usando o algoritmo criptográfico SHA-256. Os mineradores verificam transações e criam novos blocos para o blockchain ao encontrar um hash único.</code>
 
     <b>Por que você pode ganhar bitcoin com isso:</b>
     <code>Os mineradores são recompensados com bitcoins por adicionar blocos com sucesso ao blockchain. Isso incentiva os participantes da rede a manter seu funcionamento e segurança.</code>
-darts_game_caption = <b>CRYPTO APATE BOT -> Obter BTC</b>
+darts_game_caption = <b>CRYPTO QUEST -> Obter BTC</b>
 
     <b>🎯 Bem-vindo ao jogo de dardos!</b>
     Teste sua precisão e ganhe <b>BTC</b>!
@@ -48,7 +48,7 @@ darts_game_caption = <b>CRYPTO APATE BOT -> Obter BTC</b>
     <i>O jogo está disponível uma vez por dia, então concentre-se e pegue sua recompensa!</i>
     Está pronto para lançar o dardo e ganhar? Tente agora!
 
-gamezone_caption = <b>CRYPTO APATE BOT -> Obter BTC</b>
+gamezone_caption = <b>CRYPTO QUEST -> Obter BTC</b>
 
     <b>Bem-vindo à zona de jogos! 🎮</b>
 
@@ -63,7 +63,7 @@ gamezone_caption = <b>CRYPTO APATE BOT -> Obter BTC</b>
 
     Escolha seu jogo favorito e comece a ganhar <i><b>BTC</b></i> agora mesmo!
 
-user_wallets_caption = <b>CRYPTO APATE BOT -> Carteiras</b>
+user_wallets_caption = <b>CRYPTO QUEST -> Carteiras</b>
 
     Insira o número da sua carteira para retirar os fundos. Verifique a exatidão dos dados inseridos para evitar erros na transação.
 
@@ -71,7 +71,7 @@ user_wallets_caption = <b>CRYPTO APATE BOT -> Carteiras</b>
     <b>TON:</b> {$ton_wallet}
     <b>TRC20:</b> {$trc20_wallet}
 
-withdraw_caption = <b>CRYPTO APATE BOT -> Retirada</b>
+withdraw_caption = <b>CRYPTO QUEST -> Retirada</b>
 
     <b>💼 Retirada de fundos</b>
 
@@ -81,7 +81,7 @@ withdraw_caption = <b>CRYPTO APATE BOT -> Retirada</b>
 
     <i>A retirada de fundos pode demorar algum tempo dependendo da carga da rede.</i>
 
-language_caption = <b>CRYPTO APATE BOT -> Seleção de idioma</b>
+language_caption = <b>CRYPTO QUEST -> Seleção de idioma</b>
 
     Escolha um idioma para usar o bot de forma mais conveniente.
 

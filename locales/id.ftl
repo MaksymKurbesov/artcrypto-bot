@@ -24,7 +24,7 @@ darts_lose = 😕 Sayangnya, Anda gagal hari ini. Jangan menyerah, coba lagi bes
 start_mining = Proses penambangan dimulai
 mining_success_end = 🎉 Blok ditemukan! Anda telah mendapatkan 0.0001 BTC.
 insufficient_funds = 🔴 Saldo Anda tidak mencukupi.
-main_menu_caption = <b>CRYPTO APATE BOT -> Menu Utama</b>
+main_menu_caption = <b>CRYPTO QUEST -> Menu Utama</b>
 
     Anda: <b>#SWK58XOH</b>
     Saldo: <b>{$balance}BTC</b>
@@ -32,14 +32,14 @@ main_menu_caption = <b>CRYPTO APATE BOT -> Menu Utama</b>
     Peringkat teratas: <b>Tidak ada</b>
 
     <a href="https://t.me/+h9EN6YjY--05YjEy">💬 <b>Obrolan</b></a>
-mining_game_caption = <b>CRYPTO APATE BOT -> Dapatkan BTC</b>
+mining_game_caption = <b>CRYPTO QUEST -> Dapatkan BTC</b>
 
     <b>Deskripsi singkat proses penambangan:</b>
     <code>Ini adalah proses penyelesaian masalah matematika kompleks menggunakan algoritma kriptografi SHA-256. Para penambang memverifikasi transaksi dan membuat blok baru untuk blockchain dengan menemukan hash yang unik.</code>
 
     <b>Mengapa Anda bisa mendapatkan bitcoin dari ini:</b>
     <code>Para penambang mendapatkan bitcoin karena berhasil menambahkan blok ke blockchain. Ini mendorong peserta jaringan untuk menjaga operasinya dan keamanannya.</code>
-darts_game_caption = <b>CRYPTO APATE BOT -> Dapatkan BTC</b>
+darts_game_caption = <b>CRYPTO QUEST -> Dapatkan BTC</b>
 
     <b>🎯 Selamat datang di permainan Darts!</b>
     Uji ketepatan Anda dan dapatkan <b>BTC</b>!
@@ -48,7 +48,7 @@ darts_game_caption = <b>CRYPTO APATE BOT -> Dapatkan BTC</b>
     <i>Permainan ini tersedia sekali sehari, jadi fokuslah dan ambil hadiah Anda!</i>
     Siap untuk melempar dart dan menang? Coba sekarang!
 
-gamezone_caption = <b>CRYPTO APATE BOT -> Dapatkan BTC</b>
+gamezone_caption = <b>CRYPTO QUEST -> Dapatkan BTC</b>
 
     <b>Selamat datang di zona permainan! 🎮</b>
 
@@ -63,7 +63,7 @@ gamezone_caption = <b>CRYPTO APATE BOT -> Dapatkan BTC</b>
 
     Pilih permainan favorit Anda dan mulailah menghasilkan <i><b>BTC</b></i> sekarang!
 
-user_wallets_caption = <b>CRYPTO APATE BOT -> Dompet</b>
+user_wallets_caption = <b>CRYPTO QUEST -> Dompet</b>
 
     Masukkan nomor dompet Anda untuk menarik dana. Harap periksa keakuratan data yang dimasukkan untuk menghindari kesalahan dalam transaksi.
 
@@ -71,7 +71,7 @@ user_wallets_caption = <b>CRYPTO APATE BOT -> Dompet</b>
     <b>TON:</b> {$ton_wallet}
     <b>TRC20:</b> {$trc20_wallet}
 
-withdraw_caption = <b>CRYPTO APATE BOT -> Penarikan</b>
+withdraw_caption = <b>CRYPTO QUEST -> Penarikan</b>
 
     <b>💼 Penarikan Dana</b>
 
@@ -81,7 +81,7 @@ withdraw_caption = <b>CRYPTO APATE BOT -> Penarikan</b>
 
     <i>Penarikan dana mungkin memerlukan waktu tergantung pada beban jaringan.</i>
 
-language_caption = <b>CRYPTO APATE BOT -> Pemilihan Bahasa</b>
+language_caption = <b>CRYPTO QUEST -> Pemilihan Bahasa</b>
 
     Pilih bahasa untuk memudahkan penggunaan bot.
 
