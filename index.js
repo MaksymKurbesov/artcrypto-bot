@@ -37,7 +37,8 @@ import { startBasketballGame } from "./games/basketball-game.js";
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-const bot = new Telegraf("7249494538:AAFTyrQvUKj9yqS7JFFgIWhyHNJ4xwwX-yI");
+const bot = new Telegraf("7249494538:AAFTyrQvUKj9yqS7JFFgIWhyHNJ4xwwX-yI"); // prod
+// const bot = new Telegraf("7427158827:AAHweRtzXbYUW0K_iwFPSNNMXCzMBlxmMiE"); // dev
 
 const i18n = new I18n({
   defaultLocale: "en", // see below for more information
@@ -198,7 +199,7 @@ bot.on("callback_query", async (ctx) => {
 
     if (callbackData.startsWith("send_task")) {
       const taskDescription = callbackData.split("_")[2];
-      const taskLink = callbackData.split("_")[3];
+      const taskLink = callbackData.split("__")[1];
       const taskType = taskDescription.split(":")[1].trim();
       const reward = TASK_REWARD_BY_TYPE_MAP[taskType].toFixed(6);
 
@@ -229,7 +230,7 @@ bot.on("callback_query", async (ctx) => {
 
       setTimeout(() => {
         ctx.session.isUserSubscribed = true;
-      }, 2500);
+      }, 5000);
     }
 
     if (callbackData === "subscribed") {

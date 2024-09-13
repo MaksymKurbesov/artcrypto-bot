@@ -64,7 +64,7 @@ export const generateTaskButtons = (ctx, page = 0) => {
     return [
       {
         text: `${task.text} - ${task.price}₿`,
-        callback_data: `send_task_${task.callback_data}_${task.link}`,
+        callback_data: `send_task_${task.callback_data}__${task.link}`,
       },
     ];
   });
