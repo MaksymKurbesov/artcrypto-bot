@@ -22,7 +22,7 @@ game_cooldown = Você já jogou este jogo hoje. Tente novamente amanhã!
 darts_win = 🎉 Parabéns! Você acertou o alvo e ganhou {$reward} BTC! Ótimo trabalho!
 darts_lose = 😕 Infelizmente, você errou hoje. Mas não desista, tente novamente amanhã!
 start_mining = Processo de mineração iniciado
-mining_success_end = 🎉 Bloco encontrado! Você ganhou 0.000017 BTC.
+mining_success_end = 🎉 Bloco encontrado! Você ganhou {$reward} BTC.
 insufficient_funds = 🔴 Saldo insuficiente na conta.
 main_menu_caption = <b>CRYPTO QUEST -> Menu principal</b>
 

@@ -1,10 +1,11 @@
-import { animateMessage } from "../helpers.js";
+import { animateMessage, generateReward } from "../helpers.js";
 import { addMoneyToUser } from "../FirestoreApi.js";
 import { getProgressMessages } from "../consts.js";
 
 export const startMiningGame = async (ctx) => {
   ctx.session.isMining = true;
   const sentMessage = await ctx.reply(`${ctx.t("start_mining")}...`);
+  const reward = generateReward();
 
   const username = ctx.update.callback_query.from.username;
   const progressMessages = getProgressMessages(ctx);
@@ -23,9 +24,9 @@ export const startMiningGame = async (ctx) => {
     ctx.chat.id,
     messageId,
     null,
-    ctx.t("mining_success_end"),
+    ctx.t("mining_success_end", { reward: reward }),
     { parse_mode: "HTML" },
   );
 
-  await addMoneyToUser(0.000017, username);
+  await addMoneyToUser(reward, username);
 };
