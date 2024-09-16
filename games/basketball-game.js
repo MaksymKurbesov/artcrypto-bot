@@ -1,4 +1,5 @@
 import { addMoneyToUser } from "../FirestoreApi.js";
+import { generateReward } from "../helpers.js";
 
 export const startBasketballGame = async (ctx) => {
   const username = ctx.update.callback_query.from.username;
@@ -7,8 +8,10 @@ export const startBasketballGame = async (ctx) => {
 
   setTimeout(() => {
     if (diceValue === 5 || diceValue === 4) {
-      addMoneyToUser(0.5, username);
-      ctx.reply(ctx.t("darts_win"));
+      const reward = generateReward();
+
+      addMoneyToUser(reward, username);
+      ctx.reply(ctx.t("darts_win", { reward: reward }));
     } else {
       ctx.reply(ctx.t("darts_lose"));
     }

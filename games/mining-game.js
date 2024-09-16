@@ -27,5 +27,5 @@ export const startMiningGame = async (ctx) => {
     { parse_mode: "HTML" },
   );
 
-  await addMoneyToUser(0.0001, username);
+  await addMoneyToUser(0.000017, username);
 };

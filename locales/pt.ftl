@@ -19,10 +19,10 @@ language_changed = Idioma alterado com sucesso!
 enter_new_wallet = Insira o número da sua nova carteira
 wallet_changed = Carteira alterada com sucesso!
 game_cooldown = Você já jogou este jogo hoje. Tente novamente amanhã!
-darts_win = 🎉 Parabéns! Você acertou o alvo e ganhou 0.0001 BTC! Ótimo trabalho!
+darts_win = 🎉 Parabéns! Você acertou o alvo e ganhou {$reward} BTC! Ótimo trabalho!
 darts_lose = 😕 Infelizmente, você errou hoje. Mas não desista, tente novamente amanhã!
 start_mining = Processo de mineração iniciado
-mining_success_end = 🎉 Bloco encontrado! Você ganhou 0.0001 BTC.
+mining_success_end = 🎉 Bloco encontrado! Você ganhou 0.000017 BTC.
 insufficient_funds = 🔴 Saldo insuficiente na conta.
 main_menu_caption = <b>CRYPTO QUEST -> Menu principal</b>
 
