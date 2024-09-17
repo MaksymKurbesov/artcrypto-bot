@@ -9,6 +9,7 @@ import {
   inDollar,
   isUserInChat,
   updatePage,
+  updatePageWithPhoto,
 } from "./helpers.js";
 import {
   gameZoneKeyboard,
@@ -84,7 +85,7 @@ bot.command(["start", "menu"], async (ctx) => {
     userReferrals = userData.referrals;
   }
 
-  generatePage(
+  const message = await generatePage(
     ctx,
     ctx.t("main_menu_caption", {
       username: username,
@@ -96,6 +97,8 @@ bot.command(["start", "menu"], async (ctx) => {
     }),
     startInlineKeyboard(username, ctx),
   );
+
+  ctx.session.lastMessageID = message.message_id;
 
   const referralNickname = ctx.payload;
 
@@ -113,7 +116,6 @@ bot.on(message("text"), async (ctx) => {
   if (ctx.session.isUserChangeWallet) {
     await changeUserWallet(wallet, text, username);
     ctx.reply(`🟢 ${ctx.t("wallet_changed")}`);
-    console.log(ctx.session.changingWallet, "ctx.session.changingWallet");
     ctx.session.isUserChangeWallet = false;
   }
 
@@ -178,7 +180,7 @@ bot.on("callback_query", async (ctx) => {
       const userWithdrawn = userData.withdrawn.toFixed(6);
       const userReferrals = userData.referrals;
 
-      await updatePage(
+      await updatePageWithPhoto(
         ctx,
         ctx.t("main_menu_caption", {
           username: username,
@@ -189,18 +191,38 @@ bot.on("callback_query", async (ctx) => {
           referrals: userReferrals,
         }),
         startInlineKeyboard(userData.username, ctx),
+        "./main.png",
       );
+
+      // await updatePage(
+      //   ctx,
+      //   ctx.t("main_menu_caption", {
+      //     username: username,
+      //     balance: userBalance,
+      //     dollarBalance: inDollar(userBalance),
+      //     withdrawn: userWithdrawn,
+      //     dollarWithdrawn: inDollar(userWithdrawn),
+      //     referrals: userReferrals,
+      //   }),
+      //   startInlineKeyboard(userData.username, ctx),
+      // );
     }
 
     if (callbackData === "gamezone") {
-      await updatePage(ctx, ctx.t("gamezone_caption"), gameZoneKeyboard(ctx));
+      await updatePageWithPhoto(
+        ctx,
+        ctx.t("gamezone_caption"),
+        gameZoneKeyboard(ctx),
+        "./gamezone.png",
+      );
     }
 
     if (callbackData === "tasks_page") {
-      await updatePage(
+      await updatePageWithPhoto(
         ctx,
         `<b>CRYPTO QUEST -> ${ctx.t("tasks")}</b>`,
         generateTaskButtons(ctx).reply_markup.inline_keyboard,
+        "./tasks.png",
       );
     }
 
@@ -252,7 +274,6 @@ bot.on("callback_query", async (ctx) => {
       }
 
       const message = ctx.update.callback_query.message;
-      console.log(message, "message");
 
       await addMoneyToUser(ctx.session.taskReward, message.chat.username);
       await ctx.telegram.editMessageText(
@@ -359,7 +380,7 @@ bot.on("callback_query", async (ctx) => {
       const userDoc = await getDoc(userRef);
       const userData = userDoc.data();
 
-      await updatePage(
+      await updatePageWithPhoto(
         ctx,
         ctx.t("user_wallets_caption", {
           bitcoin_wallet: userData.bitcoin_wallet,
@@ -367,6 +388,7 @@ bot.on("callback_query", async (ctx) => {
           trc20_wallet: userData.trc20_wallet,
         }),
         walletsInlineKeyboard(ctx),
+        "./wallets.png",
       );
     }
 
@@ -379,7 +401,12 @@ bot.on("callback_query", async (ctx) => {
     }
 
     if (callbackData === "withdraw") {
-      await updatePage(ctx, ctx.t("withdraw_caption"), withdrawKeyboard(ctx));
+      await updatePageWithPhoto(
+        ctx,
+        ctx.t("withdraw_caption"),
+        withdrawKeyboard(ctx),
+        "./withdraw.png",
+      );
     }
 
     if (callbackData.startsWith("withdraw_")) {
@@ -413,7 +440,7 @@ bot.on("callback_query", async (ctx) => {
     }
 
     if (callbackData === "referrals") {
-      await updatePage(
+      await updatePageWithPhoto(
         ctx,
         ctx.t("referrals_caption", {
           reward: REFERRAL_REWARD.toFixed(6),
@@ -428,19 +455,35 @@ bot.on("callback_query", async (ctx) => {
           ],
           [{ text: `${ctx.t("main_menu")} 🏠`, callback_data: "main_page" }],
         ],
+        "./referrals.png",
       );
     }
 
     if (callbackData === "daily_reward") {
-      await updatePage(ctx, ctx.t("daily_reward_caption"), [
+      await updatePageWithPhoto(
+        ctx,
+        ctx.t("daily_reward_caption"),
         [
-          {
-            text: `${ctx.t("get_daily_reward")} 🎁`,
-            callback_data: "get_daily_reward",
-          },
+          [
+            {
+              text: `${ctx.t("get_daily_reward")} 🎁`,
+              callback_data: "get_daily_reward",
+            },
+          ],
+          [{ text: `${ctx.t("main_menu")} 🏠`, callback_data: "main_page" }],
         ],
-        [{ text: `${ctx.t("main_menu")} 🏠`, callback_data: "main_page" }],
-      ]);
+        "./daily_bonus.png",
+      );
+
+      // await updatePage(ctx, ctx.t("daily_reward_caption"), [
+      //   [
+      //     {
+      //       text: `${ctx.t("get_daily_reward")} 🎁`,
+      //       callback_data: "get_daily_reward",
+      //     },
+      //   ],
+      //   [{ text: `${ctx.t("main_menu")} 🏠`, callback_data: "main_page" }],
+      // ]);
     }
 
     if (callbackData === "get_daily_reward") {

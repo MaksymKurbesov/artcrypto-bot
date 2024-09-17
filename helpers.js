@@ -107,7 +107,7 @@ export const generateTaskButtons = (ctx, page = 0) => {
 };
 
 export const generatePage = (ctx, caption, inline_keyboard) => {
-  ctx.replyWithPhoto(
+  return ctx.replyWithPhoto(
     { source: "./main.png" },
     {
       caption,
@@ -126,6 +126,30 @@ export const updatePage = (ctx, caption, inline_keyboard) => {
     },
     parse_mode: "HTML",
   });
+};
+
+export const updatePageWithPhoto = async (
+  ctx,
+  caption,
+  inline_keyboard,
+  srcImage,
+) => {
+  const chatId = ctx.update.callback_query.message.chat.id;
+  const messageId = ctx.session.lastMessageID;
+
+  await ctx.editMessageMedia({
+    reply_markup: inline_keyboard,
+    chat_id: chatId,
+    message_id: messageId,
+    media: {
+      source: srcImage,
+    },
+    type: "photo",
+    caption: caption,
+    parse_mode: "HTML",
+  });
+
+  await ctx.editMessageReplyMarkup({ inline_keyboard });
 };
 
 export const animateMessage = async (ctx, messageId, baseMessage, keyboard) => {
