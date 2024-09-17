@@ -6,6 +6,7 @@ import {
   generateTaskButtons,
   getCloseButton,
   getSlotSymbols,
+  inDollar,
   isUserInChat,
   updatePage,
 } from "./helpers.js";
@@ -59,7 +60,9 @@ bot.action(/page_(\d+)/, (ctx) => {
   ctx.editMessageReplyMarkup(generateTaskButtons(ctx, page).reply_markup);
 });
 
-bot.start(async (ctx) => {
+export const BITCOIN_CURRENCY_EXCHANGE = 58471.09;
+
+bot.command(["start", "menu"], async (ctx) => {
   const username = ctx.update.message.from.username;
   const userRef = await doc(db, "users", username);
   const userDoc = await getDoc(userRef);
@@ -86,6 +89,8 @@ bot.start(async (ctx) => {
     ctx.t("main_menu_caption", {
       username: username,
       balance: userBalance,
+      dollarBalance: inDollar(userBalance),
+      dollarWithdrawn: inDollar(userWithdrawn),
       withdrawn: userWithdrawn,
       referrals: userReferrals,
     }),
@@ -178,7 +183,9 @@ bot.on("callback_query", async (ctx) => {
         ctx.t("main_menu_caption", {
           username: username,
           balance: userBalance,
+          dollarBalance: inDollar(userBalance),
           withdrawn: userWithdrawn,
+          dollarWithdrawn: inDollar(userWithdrawn),
           referrals: userReferrals,
         }),
         startInlineKeyboard(userData.username, ctx),
@@ -216,6 +223,7 @@ bot.on("callback_query", async (ctx) => {
           taskDescription: taskDescription,
           award: reward,
           link: taskLink,
+          dollarReward: inDollar(reward),
         }),
         {
           reply_markup: {
@@ -251,7 +259,10 @@ bot.on("callback_query", async (ctx) => {
         message.chat.id,
         message.message_id,
         null,
-        ctx.t("thanks_for_subscribe", { award: ctx.session.taskReward }),
+        ctx.t("thanks_for_subscribe", {
+          award: ctx.session.taskReward,
+          dollarReward: inDollar(ctx.session.taskReward),
+        }),
         {
           reply_markup: {
             inline_keyboard: [[getCloseButton(ctx)]],
@@ -404,7 +415,10 @@ bot.on("callback_query", async (ctx) => {
     if (callbackData === "referrals") {
       await updatePage(
         ctx,
-        ctx.t("referrals_caption", { reward: REFERRAL_REWARD.toFixed(6) }),
+        ctx.t("referrals_caption", {
+          reward: REFERRAL_REWARD.toFixed(6),
+          dollarReward: REFERRAL_REWARD * BITCOIN_CURRENCY_EXCHANGE.toFixed(2),
+        }),
         [
           [
             {
@@ -443,12 +457,18 @@ bot.on("callback_query", async (ctx) => {
         return ctx.answerCbQuery();
       }
 
-      await ctx.reply(ctx.t("daily_reward_message", { reward: reward }), {
-        parse_mode: "HTML",
-        reply_markup: {
-          inline_keyboard: [[getCloseButton(ctx)]],
+      await ctx.reply(
+        ctx.t("daily_reward_message", {
+          reward: reward,
+          dollarReward: inDollar(reward),
+        }),
+        {
+          parse_mode: "HTML",
+          reply_markup: {
+            inline_keyboard: [[getCloseButton(ctx)]],
+          },
         },
-      });
+      );
       await addMoneyToUser(reward, username);
       await updateDailyRewardStatus(false, username);
     }

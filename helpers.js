@@ -1,18 +1,19 @@
 import { SLOT_VALUES } from "./SLOT_VALUES.js";
 import { CONNECT_REWARD, SUBSCRIBE_REWARD } from "./consts.js";
+import { BITCOIN_CURRENCY_EXCHANGE } from "./index.js";
 
 const getTasks = (ctx) => {
   return [
     {
       text: `Scroll Wallet: ${ctx.t("connect")}`,
       link: `https://dropscroll.io`,
-      price: CONNECT_REWARD,
+      price: `${CONNECT_REWARD}₿ ≈ ${inDollar(CONNECT_REWARD)}$`,
       callback_data: `Scroll Wallet: Connect`,
     },
     {
       text: `Scroll Telegram: ${ctx.t("subscribe")}`,
       link: `https://t.me/scroll_zk_io`,
-      price: SUBSCRIBE_REWARD,
+      price: `${SUBSCRIBE_REWARD}₿ ≈ ${inDollar(SUBSCRIBE_REWARD)}$`,
       callback_data: `Scroll Telegram: Subscribe`,
     },
     // {
@@ -24,13 +25,13 @@ const getTasks = (ctx) => {
     {
       text: `Base Wallet: ${ctx.t("connect")}`,
       link: `https://dropscroll.io`,
-      price: CONNECT_REWARD,
+      price: `${CONNECT_REWARD}₿ ≈ ${inDollar(CONNECT_REWARD)}$`,
       callback_data: "Base Wallet: Connect",
     },
     {
       text: `Base Telegram: ${ctx.t("subscribe")}`,
       link: `https://t.me/base_air_drop`,
-      price: SUBSCRIBE_REWARD,
+      price: `${SUBSCRIBE_REWARD}₿ ≈ ${inDollar(SUBSCRIBE_REWARD)}$`,
       callback_data: "Base Telegram: Subscribe",
     },
     // {
@@ -40,6 +41,12 @@ const getTasks = (ctx) => {
     //   callback_data: "Base X: Subscribe",
     // },
   ];
+};
+
+export const inDollar = (amount) => {
+  const BITCOIN_CURRENCY_EXCHANGE = 58471.09;
+
+  return (amount * BITCOIN_CURRENCY_EXCHANGE).toFixed(2);
 };
 
 export const getSlotSymbols = (value) => {
@@ -63,7 +70,7 @@ export const generateTaskButtons = (ctx, page = 0) => {
   const taskButtons = tasks.slice(start, end).map((task) => {
     return [
       {
-        text: `${task.text} - ${task.price}₿`,
+        text: `${task.text} - ${task.price}`,
         callback_data: `send_task_${task.callback_data}__${task.link}`,
       },
     ];

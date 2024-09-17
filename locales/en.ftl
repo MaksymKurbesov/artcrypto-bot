@@ -41,7 +41,7 @@ task_message = <b>CRYPTO QUEST -> Task</b>
 
     {$taskDescription}
 
-    <b>{$award}BTC</b>
+    <b>{$award}BTC ≈ {$dollarReward}$</b>
 
     🔗 <a href="">Link</a>
     {$link}
@@ -51,12 +51,12 @@ thanks_for_subscribe = <b>CRYPTO QUEST -> Task</b>
 
                        🟢 Thank you for completing the task!
 
-                       You received <b>{$award}BTC.</b>
+                       You received <b>{$award}BTC ≈ {$dollarReward}$</b>
 main_menu_caption = <b>CRYPTO QUEST -> Main menu</b>
 
     You: <b>{$username}</b>
-    Balance: <b>{$balance}BTC</b>
-    Withdrawn: <b>{$withdrawn}BTC</b>
+    Balance: <b>{$balance}BTC ≈ {$dollarBalance}$</b>
+    Withdrawn: <b>{$withdrawn}BTC ≈ {$dollarWithdrawn}$</b>
     Referrals: <b>{$referrals}</b>
     Rank in top: <b>None</b>
 
@@ -71,7 +71,9 @@ mining_game_caption = <b>CRYPTO QUEST -> Get BTC</b>
 darts_game_caption = <b>CRYPTO QUEST -> Get BTC</b>
 
     <b>🎯 Welcome to Darts!</b>
+
     Test your accuracy and earn <b>BTC!</b>
+
     Hit the target and earn from <b>0.0000017BTC</b> to <b>0.000017BTC</b> for each successful throw.
 
     <i>The game is available once a day, so focus and grab your reward!</i>
@@ -81,6 +83,7 @@ gamezone_caption = <b>CRYPTO QUEST -> Get BTC</b>
     <b>Welcome to the game zone! 🎮</b>
 
     Choose one of the exciting mini-games and start earning <b>BTC</b> right now:
+
     ⛏️ <b>Mining</b> – go to the virtual mines and mine bitcoins!
     🎯 <b>Darts</b> – accuracy matters! Hit the target and get a reward.
     🏀 <b>Basketball</b> – throw the ball in the hoop and win bitcoins.
@@ -95,6 +98,7 @@ basketball_game_caption = <b>CRYPTO QUEST -> Get BTC</b>
     <b>🏀 Welcome to Basketball!</b>
 
     Test your shooting skills and earn <b>BTC</b>!
+
     Make baskets and get from <b>0.0000017BTC</b> to <b>0.000017BTC</b> for each successful shot.
 
     <i>The game is available once a day, so aim carefully and get your reward!</i>
@@ -113,7 +117,7 @@ withdraw_caption = <b>CRYPTO QUEST -> Withdrawal</b>
 
     Here you can withdraw the earned BTC to the wallet you specified. Make sure your balance is sufficient for withdrawal and check the entered data for correctness.
 
-    Minimum withdrawal amount: <b>0.0086BTC ($500)</b>.
+    Minimum withdrawal amount: <b>0.0086BTC ≈ $500</b>.
 
     <i>Withdrawing funds may take some time depending on network load.</i>
 language_caption = <b>CRYPTO QUEST -> Language selection</b>
@@ -131,7 +135,7 @@ referrals_caption = <b>CRYPTO QUEST -> Referrals</b>
 
     <b>Invite friends and get rewards!</b> 👥
 
-    Join our referral program: for each invited user, you will receive a bonus reward. <b>({$reward}BTC)</b>
+    Join our referral program: for each invited user, you will receive a bonus reward. <b>({$reward}BTC ≈ {$dollarReward}$)</b>
 
     Share your unique referral link and increase your chances of winning prizes.
     The more friends, the more rewards!
@@ -141,10 +145,10 @@ daily_reward_caption = <b>CRYPTO QUEST -> Daily bonus</b>
 
     Log into the app daily and get a bitcoin bonus!
 
-    Every day you have a chance to get a bonus from <b>0.0000017BTC</b> to <b>0.000017BTC</b> just for logging into the app.
+    Every day you have a chance to get a bonus from <b>0.0000017BTC ≈ 0.1$</b> to <b>0.000017BTC ≈ 1$</b> just for logging into the app.
 
     Don't miss a day to take advantage of the daily bonus!
-daily_reward_message = <b>🎉 Surprise of the day! Fortune has granted you {$reward}BTC today! 💫</b>
+daily_reward_message = <b>🎉 Surprise of the day! Fortune has granted you {$reward}BTC ≈ {$dollarReward} today! 💫</b>
 
     Keep logging in daily for new rewards and may luck always be with you! 🍀
 daily_reward_received = 🔴 Oops! It seems you've already claimed your daily bonus! Come back tomorrow for a new surprise. Good luck! 🍀
