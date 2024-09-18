@@ -8,7 +8,7 @@ export const sendTask = async (ctx) => {
 
   const taskID = Number(callbackData.split("_")[3]);
   const tasks = await getTasks(ctx);
-  console.log(tasks, "tasks");
+
   const task = tasks.tasks.find((item) => item.id === taskID);
   const taskIsCompleted = await checkTaskStatus(taskID, username);
 

@@ -45,7 +45,9 @@ export async function getTasks() {
 
 export async function checkTaskStatus(id, username) {
   const userData = await getUserData(username);
+  console.log(userData, "userData");
   const tasks = userData.tasks;
+  console.log(tasks, "tasks");
   const task = tasks.find((task) => task.id === id);
 
   if (task) {

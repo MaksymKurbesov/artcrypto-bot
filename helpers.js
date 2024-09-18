@@ -54,8 +54,6 @@ export const generateTaskButtons = async (ctx, page = 0) => {
   const end = start + tasksPerPage;
   const tasks = await getTasks(ctx);
 
-  // console.log(tasks.tasks, "tasks.tasks");
-
   const taskButtons = tasks.tasks.slice(start, end).map((task) => {
     return [
       {
