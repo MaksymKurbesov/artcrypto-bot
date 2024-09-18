@@ -17,8 +17,8 @@ import { i18n } from "./i18n.js";
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-// const bot = new Telegraf("7249494538:AAFTyrQvUKj9yqS7JFFgIWhyHNJ4xwwX-yI"); // prod
-const bot = new Telegraf("7427158827:AAHweRtzXbYUW0K_iwFPSNNMXCzMBlxmMiE"); // dev
+const bot = new Telegraf("7249494538:AAFTyrQvUKj9yqS7JFFgIWhyHNJ4xwwX-yI"); // prod
+// const bot = new Telegraf("7427158827:AAHweRtzXbYUW0K_iwFPSNNMXCzMBlxmMiE"); // dev
 
 export const BITCOIN_CURRENCY_EXCHANGE = 58471.09;
 
