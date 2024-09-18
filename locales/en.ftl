@@ -1,3 +1,4 @@
+task_completed = 🔴 You have already completed this assignment. Thank you for your participation!
 get_daily_reward = Get bonus
 gamezone = Game zone
 daily_reward = Daily bonus
@@ -27,6 +28,18 @@ throw_ball = Throw ball
 language_changed = Language successfully changed!
 enter_new_wallet = Enter your new wallet number
 wallet_changed = Wallet successfully changed!
+football_game_caption = <b>CRYPTO QUEST -> Get BTC</b>
+
+    <b>⚽ Welcome to Football!</b>
+
+    Show off your ball skills and earn <b>BTC</b>!
+
+    Score goals and receive from <b>0.0000017BTC</b> to <b>0.000017BTC</b> for each successful shot.
+
+    <i>The game is available once a day, so aim carefully and claim your reward!</i>
+
+    Ready to hit the field and win? Try it now!
+football = Football
 game_cooldown = You already played this game today. Try again tomorrow!
 darts_win = 🎉 Congratulations! You hit the target and earned {$reward} BTC! Great job!
 darts_lose = 😕 Unfortunately, you missed today. But don't give up, try again tomorrow!
@@ -148,7 +161,7 @@ daily_reward_caption = <b>CRYPTO QUEST -> Daily bonus</b>
     Every day you have a chance to get a bonus from <b>0.0000017BTC ≈ 0.1$</b> to <b>0.000017BTC ≈ 1$</b> just for logging into the app.
 
     Don't miss a day to take advantage of the daily bonus!
-daily_reward_message = <b>🎉 Surprise of the day! Fortune has granted you {$reward}BTC ≈ {$dollarReward} today! 💫</b>
+daily_reward_message = <b>🎉 Surprise of the day! Fortune has granted you {$reward}BTC ≈ {$dollarReward}$ today! 💫</b>
 
     Keep logging in daily for new rewards and may luck always be with you! 🍀
 daily_reward_received = 🔴 Oops! It seems you've already claimed your daily bonus! Come back tomorrow for a new surprise. Good luck! 🍀

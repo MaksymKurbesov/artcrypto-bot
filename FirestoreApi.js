@@ -1,5 +1,13 @@
-import { setDoc, doc, increment, updateDoc } from "firebase/firestore";
+import {
+  setDoc,
+  doc,
+  increment,
+  updateDoc,
+  arrayUnion,
+  getDoc,
+} from "firebase/firestore";
 import { db } from "./index.js";
+import { getUserData } from "./helpers.js";
 
 export async function addUser(username) {
   try {
@@ -8,9 +16,10 @@ export async function addUser(username) {
       bitcoin_wallet: "",
       dailyReward: true,
       games: {
-        basketball: true,
-        darts: true,
-        mining: true,
+        basketball: false,
+        darts: false,
+        mining: false,
+        football: false,
       },
       referrals: 0,
       ton_wallet: "",
@@ -24,6 +33,25 @@ export async function addUser(username) {
     return userData;
   } catch (e) {
     console.error("Ошибка при добавлении документа: ", e);
+  }
+}
+
+export async function getTasks() {
+  const tasksDoc = doc(db, "tasks", "tasks");
+  const tasks = await getDoc(tasksDoc);
+
+  return tasks.data();
+}
+
+export async function checkTaskStatus(id, username) {
+  const userData = await getUserData(username);
+  const tasks = userData.tasks;
+  const task = tasks.find((task) => task.id === id);
+
+  if (task) {
+    return task.completed;
+  } else {
+    return false;
   }
 }
 
@@ -54,6 +82,16 @@ export async function addMoneyToUser(amount, username) {
     });
   } catch (e) {
     console.error("Ошибка при добавлении денег пользователю: ", e);
+  }
+}
+
+export async function completeTask(id, username) {
+  try {
+    await updateDoc(doc(db, "users", username), {
+      tasks: arrayUnion({ id, completed: true }),
+    });
+  } catch (e) {
+    console.error("Ошибка при выполнение задачи пользователю: ", e);
   }
 }
 

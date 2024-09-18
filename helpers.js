@@ -1,53 +1,40 @@
 import { SLOT_VALUES } from "./SLOT_VALUES.js";
-import { CONNECT_REWARD, SUBSCRIBE_REWARD } from "./consts.js";
-import { BITCOIN_CURRENCY_EXCHANGE } from "./index.js";
-
-const getTasks = (ctx) => {
-  return [
-    {
-      text: `Scroll Wallet: ${ctx.t("connect")}`,
-      link: `https://dropscroll.io`,
-      price: `${CONNECT_REWARD}₿ ≈ ${inDollar(CONNECT_REWARD)}$`,
-      callback_data: `Scroll Wallet: Connect`,
-    },
-    {
-      text: `Scroll Telegram: ${ctx.t("subscribe")}`,
-      link: `https://t.me/scroll_zk_io`,
-      price: `${SUBSCRIBE_REWARD}₿ ≈ ${inDollar(SUBSCRIBE_REWARD)}$`,
-      callback_data: `Scroll Telegram: Subscribe`,
-    },
-    // {
-    //   text: `Scroll X: ${ctx.t("subscribe")}`,
-    //   link: `https://google.com`,
-    //   price: SUBSCRIBE_REWARD,
-    //   callback_data: "Scroll X: Subscribe",
-    // },
-    {
-      text: `Base Wallet: ${ctx.t("connect")}`,
-      link: `https://dropscroll.io`,
-      price: `${CONNECT_REWARD}₿ ≈ ${inDollar(CONNECT_REWARD)}$`,
-      callback_data: "Base Wallet: Connect",
-    },
-    {
-      text: `Base Telegram: ${ctx.t("subscribe")}`,
-      link: `https://t.me/base_air_drop`,
-      price: `${SUBSCRIBE_REWARD}₿ ≈ ${inDollar(SUBSCRIBE_REWARD)}$`,
-      callback_data: "Base Telegram: Subscribe",
-    },
-    // {
-    //   text: `Base X: ${ctx.t("subscribe")}`,
-    //   link: `https://x.com`,
-    //   price: SUBSCRIBE_REWARD,
-    //   callback_data: "Base X: Subscribe",
-    // },
-  ];
-};
+import { db } from "./index.js";
+import { doc, getDoc } from "firebase/firestore";
+import { addUser, getTasks } from "./FirestoreApi.js";
 
 export const inDollar = (amount) => {
   const BITCOIN_CURRENCY_EXCHANGE = 58471.09;
 
   return (amount * BITCOIN_CURRENCY_EXCHANGE).toFixed(2);
 };
+
+export async function getUserData(username) {
+  const userRef = doc(db, "users", username);
+  const userDoc = await getDoc(userRef);
+  return userDoc.exists() ? userDoc.data() : null;
+}
+
+export function formatUserData(userData) {
+  return {
+    balance: parseFloat(userData.balance).toFixed(6),
+    withdrawn: parseFloat(userData.withdrawn).toFixed(6),
+    referrals: userData.referrals,
+  };
+}
+
+export async function getOrCreateUser(username) {
+  const userRef = doc(db, "users", username);
+  const userDoc = await getDoc(userRef);
+
+  if (!userDoc.exists()) {
+    // Создаем нового пользователя
+    return await addUser(username);
+  } else {
+    // Возвращаем существующие данные пользователя
+    return userDoc.data();
+  }
+}
 
 export const getSlotSymbols = (value) => {
   // Найдем объект, у которого value совпадает с выпавшим числом
@@ -61,17 +48,19 @@ export const getSlotSymbols = (value) => {
   }
 };
 
-export const generateTaskButtons = (ctx, page = 0) => {
+export const generateTaskButtons = async (ctx, page = 0) => {
   const tasksPerPage = 5;
   const start = page * tasksPerPage;
   const end = start + tasksPerPage;
-  const tasks = getTasks(ctx);
+  const tasks = await getTasks(ctx);
 
-  const taskButtons = tasks.slice(start, end).map((task) => {
+  // console.log(tasks.tasks, "tasks.tasks");
+
+  const taskButtons = tasks.tasks.slice(start, end).map((task) => {
     return [
       {
         text: `${task.text} - ${task.price}`,
-        callback_data: `send_task_${task.callback_data}__${task.link}`,
+        callback_data: `send_task_id_${task.id}`,
       },
     ];
   });
@@ -108,7 +97,7 @@ export const generateTaskButtons = (ctx, page = 0) => {
 
 export const generatePage = (ctx, caption, inline_keyboard) => {
   return ctx.replyWithPhoto(
-    { source: "./main.png" },
+    { source: "./images/main.png" },
     {
       caption,
       reply_markup: {

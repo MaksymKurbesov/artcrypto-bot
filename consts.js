@@ -40,6 +40,7 @@ export const gameZoneKeyboard = (ctx) => {
       { text: `${ctx.t("darts")} 🎯`, callback_data: "darts_game" },
       { text: `${ctx.t("basketball")} 🏀`, callback_data: "basketball_game" },
     ],
+    [{ text: `${ctx.t("football")} ⚽`, callback_data: "football_game" }],
     [{ text: `${ctx.t("main_menu")} 🏠`, callback_data: "main_page" }],
   ];
 };
