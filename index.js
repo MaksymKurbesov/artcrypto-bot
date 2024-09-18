@@ -88,7 +88,7 @@ bot.on("callback_query", async (ctx) => {
 });
 
 // Запуск бота
-bot.launch();
+bot.launch().then(() => console.log("reset"));
 
 bot.catch((err, ctx) => {
   console.error(`Ошибка для пользователя ${ctx.updateType}`, err);
