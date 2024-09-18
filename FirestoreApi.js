@@ -44,17 +44,8 @@ export async function getTasks() {
 }
 
 export async function checkTaskStatus(id, username) {
-  const userData = await getUserData(username);
-  console.log(userData, "userData");
-  const tasks = userData.tasks;
-  console.log(tasks, "tasks");
-  const task = tasks.find((task) => task.id === id);
-
-  if (task) {
-    return task.completed;
-  } else {
-    return false;
-  }
+  const task = (await getUserData(username)).tasks?.find((t) => t.id === id);
+  return task?.completed ?? false;
 }
 
 export async function updateGameStatus(game, status, username) {
