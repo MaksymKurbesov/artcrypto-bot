@@ -15,7 +15,7 @@ export const Referrals = async (ctx) => {
       [
         {
           text: ctx.t("invite_friends"),
-          url: `https://t.me/share/url?text=${ctx.t("referral_message")}&url=https://t.me/cryptoapatebot/?start=${username}`,
+          url: `https://t.me/share/url?text=${ctx.t("referral_message")}&url=https://t.me/crypto_quest_app_bot/?start=${username}`,
         },
       ],
       [{ text: `${ctx.t("main_menu")} 🏠`, callback_data: "main_page" }],
