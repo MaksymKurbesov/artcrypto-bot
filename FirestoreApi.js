@@ -98,11 +98,22 @@ export async function updateDailyRewardStatus(status, username) {
   }
 }
 
-export async function addReferralToUser(username) {
+export async function addReferralToUser(user, referral) {
   try {
-    await updateDoc(doc(db, "users", username), {
+    await updateDoc(doc(db, "users", referral), {
       referrals: increment(1),
+      refs: arrayUnion(user),
     });
+  } catch (e) {
+    console.error("Ошибка при добавлении пользователя в рефералы: ", e);
+  }
+}
+
+export async function userAlreadyHasReferral(username, referral) {
+  try {
+    const userData = await getUserData(referral);
+    console.log(userData, "userData");
+    return userData.refs.includes(username);
   } catch (e) {
     console.error("Ошибка при добавлении пользователя в рефералы: ", e);
   }

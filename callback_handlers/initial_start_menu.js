@@ -1,4 +1,8 @@
-import { addMoneyToUser, addReferralToUser } from "../FirestoreApi.js";
+import {
+  addMoneyToUser,
+  addReferralToUser,
+  userAlreadyHasReferral,
+} from "../FirestoreApi.js";
 import {
   formatUserData,
   generatePage,
@@ -11,9 +15,15 @@ export const InitialStartMenu = async (ctx) => {
   try {
     const username = ctx.update.message.from.username;
     const referralNickname = ctx.payload;
+    const alreadyHasReferral = await userAlreadyHasReferral(
+      username,
+      referralNickname,
+    );
 
-    if (referralNickname) {
-      await addReferralToUser(referralNickname);
+    console.log(alreadyHasReferral, "alreadyHasReferral");
+
+    if (referralNickname && !alreadyHasReferral) {
+      await addReferralToUser(username, referralNickname);
       await addMoneyToUser(REFERRAL_REWARD, referralNickname);
     }
 
