@@ -15,6 +15,7 @@ export const InitialStartMenu = async (ctx) => {
   try {
     const username = ctx.update.message.from.username;
     const referralNickname = ctx.payload;
+
     const alreadyHasReferral = await userAlreadyHasReferral(
       username,
       referralNickname,

@@ -100,6 +100,7 @@ gamezone_caption = <b>CRYPTO QUEST -> Get BTC</b>
     ⛏️ <b>Mining</b> – go to the virtual mines and mine bitcoins!
     🎯 <b>Darts</b> – accuracy matters! Hit the target and get a reward.
     🏀 <b>Basketball</b> – throw the ball in the hoop and win bitcoins.
+    ⚽ <b>Football</b> – score goals and lead your team to victory for a bitcoin reward!
 
     <i>Each game is a chance to increase your crypto capital!
 
