@@ -74,7 +74,7 @@ gamezone_caption = <b>CRYPTO QUEST -> Ganar BTC</b>
 
     <i>¡Cada juego es una oportunidad de aumentar tu capital en criptomonedas!
 
-    <b>Solo puedes jugar una vez al día en cada juego.</b>
+    <b>¡Cada uno de los juegos se puede jugar cada 6 horas!</b>
 
     Elige tu juego favorito y empieza a ganar</i><b> BTC</b>!
 
@@ -98,8 +98,6 @@ main_menu_caption = <b>CRYPTO QUEST -> Menú principal</b>
     Retirado: <b>{$withdrawn}BTC ≈ {$dollarWithdrawn}$</b>
     Referidos: <b>{$referrals}</b>
     Posición en el ranking: <b>Ninguna</b>
-
-    <a href="google.com">💬 <b>Chat</b></a>
 mining = Minería
 mining_game_caption = <b>CRYPTO QUEST -> Ganar BTC</b>
 

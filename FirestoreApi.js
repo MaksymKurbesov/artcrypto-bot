@@ -111,6 +111,8 @@ export async function addReferralToUser(user, referral) {
 
 export async function userAlreadyHasReferral(username, referral) {
   try {
+    if (!referral) return;
+
     const userData = await getUserData(referral);
     console.log(userData, "userData");
     return userData.refs.includes(username);

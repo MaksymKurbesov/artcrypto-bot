@@ -1,3 +1,22 @@
+about_us = About us
+about_us_caption = <b>GameMine</b> is an international tech company working in blockchain, cryptocurrency, and gaming. We create solutions that allow people to earn through games and learning 🎮💰.
+
+    <b>Who we are:</b>
+    We believe that gaming and cryptocurrencies open up new economic opportunities. Our team combines the expertise of developers, analysts, and investors to create an ecosystem where users earn by playing and learning 🧠.
+
+    <b>How we earn:</b>
+    We monetize ads, collaborate with brands, and integrate blockchain into gaming platforms. Partners pay for user activity, and a portion of the revenue is shared with players 🤑.
+
+    <b>Sources of income:</b>
+    🔹 Affiliate programs 🤝
+    🔹 In-game ads 📺
+    🔹 Cloud cryptocurrency mining ⛏️
+
+    <b>A win for everyone:</b>
+    Users earn from tasks and mining, while we grow thanks to an active audience and blockchain technology 🚀.
+
+    Join <b>GameMine</b> and start earning while having fun! 🎉
+
 task_completed = 🔴 You have already completed this assignment. Thank you for your participation!
 get_daily_reward = Get bonus
 gamezone = Game zone
@@ -72,8 +91,6 @@ main_menu_caption = <b>CRYPTO QUEST -> Main menu</b>
     Withdrawn: <b>{$withdrawn}BTC ≈ {$dollarWithdrawn}$</b>
     Referrals: <b>{$referrals}</b>
     Rank in top: <b>None</b>
-
-    <a href="google.com">💬 <b>Chat</b></a>
 mining_game_caption = <b>CRYPTO QUEST -> Get BTC</b>
 
     <b>Brief description of the mining process:</b>
@@ -104,7 +121,7 @@ gamezone_caption = <b>CRYPTO QUEST -> Get BTC</b>
 
     <i>Each game is a chance to increase your crypto capital!
 
-    <b>You can play each game once a day!</b>
+    <b>Each of the games can be played every 6 hours!</b>
 
     Choose your favorite game and start earning</i><b> BTC</b>!
 basketball_game_caption = <b>CRYPTO QUEST -> Get BTC</b>

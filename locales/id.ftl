@@ -74,7 +74,7 @@ gamezone_caption = <b>CRYPTO QUEST -> Dapatkan BTC</b>
 
     <i>Setiap game adalah kesempatan untuk menambah modal kripto Anda!
 
-    <b>Setiap game hanya bisa dimainkan sekali sehari!</b>
+    <b>Setiap permainan bisa dimainkan setiap 6 jam!</b>
 
     Pilih game favoritmu dan mulailah mendapatkan</i><b> BTC</b>!
 
@@ -98,8 +98,6 @@ main_menu_caption = <b>CRYPTO QUEST -> Menu utama</b>
     Ditarik: <b>{$withdrawn}BTC ≈ {$dollarWithdrawn}$</b>
     Referensi: <b>{$referrals}</b>
     Peringkat: <b>Tidak ada</b>
-
-    <a href="google.com">💬 <b>Obrolan</b></a>
 mining = Mining
 mining_game_caption = <b>CRYPTO QUEST -> Dapatkan BTC</b>
 

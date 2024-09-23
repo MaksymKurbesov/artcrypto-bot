@@ -21,6 +21,7 @@ import { ConfirmWithdraw } from "./confirm_withdraw.js";
 import { changeLanguage } from "./change_language.js";
 import { footballGame } from "./football_game.js";
 import { StartFootballGame } from "./start_football_game.js";
+import { AboutUs } from "./about_us.js";
 
 export const callbackHandlers = [
   // Точные соответствия
@@ -99,6 +100,10 @@ export const callbackHandlers = [
   {
     check: (data) => data === "get_daily_reward",
     handler: GetDailyReward,
+  },
+  {
+    check: (data) => data === "about_us",
+    handler: AboutUs,
   },
   // Обработчики с префиксами
   {
