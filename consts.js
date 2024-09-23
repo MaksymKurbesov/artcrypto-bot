@@ -28,7 +28,7 @@ export const startInlineKeyboard = (userId, ctx) => {
     ],
     [
       { text: `🌍 ${ctx.t("language")}`, callback_data: "language" },
-      { text: "🆘 Support", callback_data: "6" },
+      { text: "🆘 Support", url: "https://t.me/cryptoquest_bot_support" },
     ],
     [{ text: `📄  ${ctx.t("about_us")}`, callback_data: "about_us" }],
   ];
