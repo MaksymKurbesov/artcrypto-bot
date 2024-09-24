@@ -5,6 +5,7 @@ import {
   updateDoc,
   arrayUnion,
   getDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "./index.js";
 import { getUserData } from "./helpers.js";
@@ -26,6 +27,7 @@ export async function addUser(username) {
       trc20_wallet: "",
       username,
       withdrawn: 0,
+      registered: serverTimestamp(),
     };
 
     await setDoc(doc(db, "users", username), userData);
