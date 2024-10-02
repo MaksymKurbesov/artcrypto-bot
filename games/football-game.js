@@ -6,8 +6,10 @@ export const startFootballGame = async (ctx) => {
   const diceMessage = await ctx.sendDice({ emoji: "⚽️" });
   const diceValue = diceMessage.dice.value;
 
+  console.log(diceValue, "diceValue");
+
   setTimeout(() => {
-    if (diceValue === 5 || diceValue === 4) {
+    if (diceValue === 5 || diceValue === 4 || diceValue === 3) {
       const reward = generateReward();
 
       addMoneyToUser(reward, username);

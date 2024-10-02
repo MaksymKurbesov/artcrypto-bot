@@ -21,8 +21,6 @@ export const InitialStartMenu = async (ctx) => {
       referralNickname,
     );
 
-    console.log(alreadyHasReferral, "alreadyHasReferral");
-
     if (referralNickname && !alreadyHasReferral) {
       await addReferralToUser(username, referralNickname);
       await addMoneyToUser(REFERRAL_REWARD, referralNickname);
